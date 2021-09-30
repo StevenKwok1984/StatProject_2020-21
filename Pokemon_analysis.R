@@ -1,3 +1,6 @@
+# import library required
+library(dplyr)
+
 # The first observation
 load("pokemon.Rdata")
 head(pok,1)
@@ -12,6 +15,15 @@ pok_age_l100
 
 # However, according to the article, the records where the answer of 
 # ATTENTION_filter1 is not "Disagree" should be filtered
-pok_cleaned <- pok[pok$ATTENTION_filter1=="Disagree",]
-summary(pok_cleaned)
+pok_new <- pok[pok$ATTENTION_filter1=="Disagree",]
+summary(pok_new)
+
+
+################
+###Regression###
+################
+
+###convert variables into numeric values###
+pok_new[,4:31] <- pok_new[,4:31] %>% mutate_if(is.factor,as.numeric)
+summary(pok_new)
 
