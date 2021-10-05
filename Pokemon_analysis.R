@@ -1,7 +1,16 @@
 # import library required
 library(dplyr)
 library(psych)
+require(foreign)
+require(ggplot2)
+require(MASS)
+require(Hmisc)
+require(reshape2)
 
+
+####################################
+###Data Observation and Cleansing###
+####################################
 
 # The first observation
 load("pokemon.Rdata")
@@ -49,25 +58,29 @@ alpha(pok_new[27:29], check.keys=TRUE)
 # variable grouping
 Attitude <- rowMeans(pok_new[7:12])
 StepAttitude <- rowMeans(pok_new[13:18])
-Behaviour <- rowMeans(pok_new[19:24])
+Behqviour <- rowMeans(pok_new[19:24])
 PokemonBehaviour <- rowMeans(pok_new[27:29])
 
 # create new dataset
-Pok_Grouped <- pok_new[c(1:6)]
+Pok_Grouped <- pok_new[c(4:6)]
 Pok_Grouped$Attitude <- Attitude
 Pok_Grouped$StepsAttitude <- StepAttitude
-Pok_Grouped$Behaviour <- Behaviour
+Pok_Grouped$PhyscialActivity <- Behaviour
 Pok_Grouped$PokemonGo_AppUsage <- pok_new$app_usage_PokemonGoApp_pokemonusage1
 Pok_Grouped$social_sharing <- pok_new$social_sharing
 Pok_Grouped$PokemonRelate_Behaviour <- PokemonBehaviour
 head(Pok_Grouped)
 
 
+
 ########################
 ###Model Constructing###
 ########################
 
-Pok_Grouped
-
 ###Simple linear model###
-Pokemon_Linear <- lm(Pok_Grouped)
+# Relations between all variables and Physical Acticity
+Pok_Linear <- lm(PhyscialActivity ~ . , data = Pok_Grouped)
+
+###logistic regression model###
+Pok_Logit <- polr(PhyscialActivity ~ . , data = Pok_Grouped, Hess = TRUE)
+summary(model)
