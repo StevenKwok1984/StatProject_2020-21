@@ -67,5 +67,7 @@ head(Pok_Grouped)
 ###Model Constructing###
 ########################
 
+Pok_Grouped
+
 ###Simple linear model###
-Pokeon_Linear <- lm()
+Pokemon_Linear <- lm(Pok_Grouped)
