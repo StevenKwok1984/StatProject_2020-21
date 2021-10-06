@@ -70,7 +70,16 @@ Pok_Grouped$PokemonGo_AppUsage <- pok_new$app_usage_PokemonGoApp_pokemonusage1
 Pok_Grouped$social_sharing <- pok_new$social_sharing
 Pok_Grouped$PokemonRelate_Behaviour <- PokemonBehaviour
 head(Pok_Grouped)
+Pok_Grouped$PokemonGo_AppUsage
 
+
+########################
+###Data Visualisation###
+########################
+
+ggplot(Pok_Grouped, aes(PokemonGo_AppUsage, PhyscialActivity)) +
+  geom_jitter(height = 0) +
+  ggtitle("Attitude versus Physical Activity")
 
 
 ########################
@@ -80,6 +89,29 @@ head(Pok_Grouped)
 ###Simple linear model###
 # Relations between all variables and Physical Acticity
 Pok_Linear <- lm(PhyscialActivity ~ . , data = Pok_Grouped)
+
+##Stepwise Selection
+stepwise.Pok_Linear <- stepAIC(Pok_Linear, direction = "both", 
+                      trace = FALSE)
+summary(stepwise.Pok_Linear)
+
+#@ Since t-value "Gender", "StepsAttitude" and "PokemonRelate_Behaviour"
+#@ smaller than 0.001, drop them
+# The Final model
+Pok_Linear_final <- lm(PhyscialActivity ~ age + education + Attitude,
+                       data = Pok_Grouped)
+
+
+
+
+
+
+
+
+
+
+
+
 
 ###logistic regression model###
 Pok_Logit <- polr(PhyscialActivity ~ . , data = Pok_Grouped, Hess = TRUE)
