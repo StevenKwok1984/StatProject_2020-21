@@ -2,10 +2,12 @@
 library(dplyr)
 library(psych)
 require(foreign)
-require(ggplot2)
+library(ggplot2)
 require(MASS)
 require(Hmisc)
 require(reshape2)
+library(GGally)
+
 
 
 ####################################
@@ -70,16 +72,31 @@ Pok_Grouped$PokemonGo_AppUsage <- pok_new$app_usage_PokemonGoApp_pokemonusage1
 Pok_Grouped$social_sharing <- pok_new$social_sharing
 Pok_Grouped$PokemonRelate_Behaviour <- PokemonBehaviour
 head(Pok_Grouped)
-Pok_Grouped$PokemonGo_AppUsage
+
+summary(Pok_Grouped)
+
 
 
 ########################
 ###Data Visualisation###
 ########################
 
-ggplot(Pok_Grouped, aes(PokemonGo_AppUsage, PhyscialActivity)) +
-  geom_jitter(height = 0) +
-  ggtitle("Attitude versus Physical Activity")
+ggpairs(Pok_Grouped)
+
+boxplot(PhyscialActivity~education,
+        data=Pok_Grouped,
+        main="Different boxplots for gender",
+        xlab="Month Number",
+        ylab="Amount of Physical Activity"
+)
+
+boxplot(PhyscialActivity~Gender,
+        data=Pok_Grouped,
+        main="Different boxplots for Education Level",
+        xlab="Education Level",
+        ylab="Amount of Physical Activity"
+)
+
 
 
 ########################
@@ -92,27 +109,25 @@ Pok_Linear <- lm(PhyscialActivity ~ . , data = Pok_Grouped)
 
 ##Stepwise Selection
 stepwise.Pok_Linear <- stepAIC(Pok_Linear, direction = "both", 
-                      trace = FALSE)
-summary(stepwise.Pok_Linear)
-
-#@ Since t-value "Gender", "StepsAttitude" and "PokemonRelate_Behaviour"
-#@ smaller than 0.001, drop them
-# The Final model
-Pok_Linear_final <- lm(PhyscialActivity ~ age + education + Attitude,
+                               trace = TRUE)
+stepwise.Pok_Linear
+#@ According the AIC criteria, stewise.Pok_Linear model is the best model with 
+#@ smallest AIC. However, "StepsAttutide" and "Attitude" having the same aspects,
+#@ Thus, we should drop one. According to the result, Drop of "Attitude" only cause
+#@ small rise, so we drop "Attitude" 
+Pok_Linear_final <- lm(PhyscialActivity ~ age + education + StepsAttitude + 
+                         PokemonGo_AppUsage + PokemonRelate_Behaviour,
                        data = Pok_Grouped)
+summary(Pok_Linear_final)
 
 
 
+#####################################
+###Data Visualisation of new model###
+#####################################
 
-
-
-
-
-
-
-
-
-
-###logistic regression model###
-Pok_Logit <- polr(PhyscialActivity ~ . , data = Pok_Grouped, Hess = TRUE)
-summary(model)
+Pok.Grouped_New <- Pok_Grouped
+Pok.Grouped_New$Attitude <- NULL
+Pok.Grouped_New$social_sharing <- NULL
+ggpairs(Pok.Grouped_New)
+summary()
