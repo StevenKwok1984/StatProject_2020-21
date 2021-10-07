@@ -11,20 +11,33 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introductaion
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+It is well known that sport is essential for individual's physical health. With sport, we can train our muscles and respiratory, as well as enhancing immunity (Ornulf Seippel. 2006). Urbanizes, however, do lack of exercise due to various reasons. such as job character and long working period. In this way, the risk of obesity, depression, high blood pressures, as well as a series of cardiovascular diseases increased rapidly, being harmful to public health. For sloving health issues, augmented reality (AR) videos games like Pokemon Go are in consideration. Pokemon Go is a famous cardiovascular diseases mobile game developed by Niantic Inc. It was released at 2016 on both Apple Store and Google Play (Luke Reilly. 2017). In this game, player can catch, hatch and train Pokemon, as well as using them for battling and tower controlling (Andrew Webster. 2015).
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
-```
 
-## Including Plots
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+# Methodology
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
+
+# Result
+
+
+
+
+
+
+
+
+
+
+# Reference
+
+https://www.ign.com/articles/2015/09/10/pokemon-go-coming-to-smartphones
+
+https://www.theverge.com/2015/9/10/9300101/pokemon-go-nintendo-mobile-games
+
+https://www.tandfonline.com/doi/full/10.1080/17430430500355790?scroll=top&needAccess=true
