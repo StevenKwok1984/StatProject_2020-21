@@ -1,12 +1,12 @@
 # import library required
 library(dplyr)
 library(psych)
-require(foreign)
 library(ggplot2)
 require(MASS)
 require(Hmisc)
 require(reshape2)
 library(GGally)
+library(olsrr)
 
 
 
@@ -107,6 +107,9 @@ boxplot(PhyscialActivity~Gender,
 # Relations between all variables and Physical Acticity
 Pok_Linear <- lm(PhyscialActivity ~ . , data = Pok_Grouped)
 
+ols_step_best_subset(Pok_Linear)
+
+
 ##Stepwise Selection
 stepwise.Pok_Linear <- stepAIC(Pok_Linear, direction = "both", 
                                trace = TRUE)
@@ -122,21 +125,32 @@ summary(Pok_Linear_final)
 
 
 
-####################
-###Model Checking###
-####################
-
-# residul plots
-
-
-
-
 #####################################
 ###Data Visualisation of new model###
 #####################################
 
+###assumption checking###
+
+par(mfrow = c(2, 2))
+plot(Pok_Linear)
+dev.off()
+par(mfrow = c(2, 2))
+plot(Pok_Linear_final)
+
+###Relations visualisation###
+
 Pok.Grouped_New <- Pok_Grouped
 Pok.Grouped_New$Attitude <- NULL
 Pok.Grouped_New$social_sharing <- NULL
+
 ggpairs(Pok.Grouped_New)
-summary()
+
+par(mfrow = c(2, 3))
+for(i in 1:7){
+        if(i != 2)
+                boxplot(Pok.Grouped_New[,i]~education, data=Pok.Grouped_New)
+}
+for(i in 1:7){
+        if(i != 3)
+                boxplot(Pok.Grouped_New[,i]~Gender, data=Pok.Grouped_New)
+}
