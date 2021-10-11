@@ -112,8 +112,8 @@ library(olsrr)
 # Relations between all variables and Physical Acticity
 Pok_Linear <- lm(PhyscialActivity ~ . , data = Pok_Grouped)
 
-ols_step_best_subset(Pok_Linear)
-
+select_result <- ols_step_best_subset(Pok_Linear)
+plot(select_result)
 
 ##Stepwise Selection
 stepwise.Pok_Linear <- stepAIC(Pok_Linear, direction = "both", 
