@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Background
 
-It is well known that sport is essential for individual's physical health. With sport, we can train our muscles and respiratory, as well as enhancing immunity (Ornulf Seippel. 2006). Urbanizes, however, do lack of exercise due to various reasons. such as job character and long working period. In this way, the risk of obesity, depression, high blood pressures, as well as a series of cardiovascular diseases increased rapidly, being harmful to public health. For solving health issues, augmented reality (AR) videos games are in consideration. Augmented reality is an extented version of VR.  (Tim Fisher. 2021)
+It is well known that sport is essential for individual's physical health. With sport, we can train our muscles and respiratory, as well as enhancing immunity (Ornulf Seippel. 2006). Urbanizes, however, do lack of exercise due to various reasons. such as job character and long working period. In this way, the risk of obesity, depression, high blood pressures, as well as a series of cardiovascular diseases increased rapidly, being harmful to public health. For solving health issues, augmented reality (AR) videos games are in consideration. Augmented reality is an extented version of VR. (Tim Fisher. 2021)
 
 Pokemon Go is a famous cardiovascular diseases mobile game developed by Niantic Inc. It was released at 2016 on both Apple Store and Google Play (Luke Reilly. 2017). In this game, player required walking to catch, hatch and train Pokemon, those Pokemon can be used for battling and tower controlling (Andrew Webster. 2015). Because of popularity, Pokemon Go facilitating an obvious behavior change in public health (Dillet. 2016).
 

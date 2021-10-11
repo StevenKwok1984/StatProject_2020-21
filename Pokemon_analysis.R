@@ -122,6 +122,15 @@ summary(Pok_Linear_final)
 
 
 
+####################
+###Model Checking###
+####################
+
+# residul plots
+
+
+
+
 #####################################
 ###Data Visualisation of new model###
 #####################################
