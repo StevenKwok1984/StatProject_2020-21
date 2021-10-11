@@ -1,14 +1,14 @@
 # import library required
-library(dplyr)
 library(psych)
+
+library(dplyr)
 library(ggplot2)
-library(MASS)
 library(olsrr)
 library(GGally)
-library(Hmisc)
-library(reshape2)
-library(foreign)
-
+require(foreign)
+require(MASS)
+require(Hmisc)
+require(reshape2)
 
 
 ####################################
