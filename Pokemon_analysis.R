@@ -2,11 +2,12 @@
 library(dplyr)
 library(psych)
 library(ggplot2)
-require(MASS)
-require(Hmisc)
-require(reshape2)
-library(GGally)
+library(MASS)
 library(olsrr)
+library(GGally)
+
+library(Hmisc)
+library(reshape2)
 
 
 
