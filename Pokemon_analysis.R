@@ -1,14 +1,6 @@
 # import library required
-library(psych)
-
 library(dplyr)
-library(ggplot2)
-library(olsrr)
-library(GGally)
-require(foreign)
-require(MASS)
-require(Hmisc)
-require(reshape2)
+library(psych)
 
 
 ####################################
@@ -82,6 +74,15 @@ summary(Pok_Grouped)
 ###Data Visualisation###
 ########################
 
+# libraries required
+library(ggplot2)
+library(GGally)
+require(foreign)
+require(MASS)
+require(Hmisc)
+require(reshape2)
+
+# Start plotting
 ggpairs(Pok_Grouped)
 
 boxplot(PhyscialActivity~education,
@@ -103,6 +104,9 @@ boxplot(PhyscialActivity~Gender,
 ########################
 ###Model Constructing###
 ########################
+
+# library required
+library(olsrr)
 
 ###Simple linear model###
 # Relations between all variables and Physical Acticity
