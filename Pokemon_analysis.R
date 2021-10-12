@@ -100,7 +100,7 @@ boxplot(PhyscialActivity~Gender,
 )
 
 
-
+Pok_Grouped$PokemonRelate_Behaviour
 ########################
 ###Model Constructing###
 ########################
@@ -109,16 +109,19 @@ boxplot(PhyscialActivity~Gender,
 library(olsrr)
 
 ###Simple linear model###
-# Relations between all variables and Physical Acticity
-Pok_Linear <- lm(PhyscialActivity ~ . , data = Pok_Grouped)
+# full model construction
+Pok_Log.Linear <- lm(PhyscialActivity ~ log(age) + log(education) +
+                             log(Gender) + Attitude + StepsAttitude +
+                             log(PokemonGo_AppUsage) + log(social_sharing) +
+                             PokemonRelate_Behaviour, data = Pok_Grouped)
+summary(Pok_Log.Linear)
 
-select_result <- ols_step_best_subset(Pok_Linear)
-plot(select_result)
+ols_step_best_subset(Pok_Log.Linear)
+
 
 ##Stepwise Selection
-stepwise.Pok_Linear <- stepAIC(Pok_Linear, direction = "both", 
-                               trace = TRUE)
-stepwise.Pok_Linear
+#stepwise.Pok_Linear <- stepAIC(Pok_Linear, direction = "both", trace = TRUE)
+#stepwise.Pok_Linear
 #@ According the AIC criteria, stewise.Pok_Linear model is the best model with 
 #@ smallest AIC. However, "StepsAttutide" and "Attitude" having the same aspects,
 #@ Thus, we should drop one. According to the result, Drop of "Attitude" only cause
