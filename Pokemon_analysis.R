@@ -162,9 +162,9 @@ Pok.Linear <- glm(PhyscialActivity ~ ., data = Pok_Grouped)
 
 summary(Pok.Linear)
 
+Pok.Poisson <- glm(PhyscialActivity ~ ., data = Pok_Grouped, family=poisson)
 
-
-
+summary(Pok.Poisson)
 
 
 
