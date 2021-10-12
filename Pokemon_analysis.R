@@ -111,10 +111,16 @@ library(olsrr)
 
 ###Simple linear model###
 # full model construction
-Pok_Log.Linear <- lm(PhyscialActivity ~ log(age) + log(education) +
-                             log(Gender) + Attitude + StepsAttitude +
+Pok_Log.Linear <- lm(log(PhyscialActivity) ~ log(age) + log(education) +
+                             log(Gender) + log(Attitude) + log(StepsAttitude) +
                              log(PokemonGo_AppUsage) + log(social_sharing) +
-                             PokemonRelate_Behaviour, data = Pok_Grouped)
+                             log(PokemonRelate_Behaviour), data = Pok_Grouped)
+
+#assumption checking
+par(mfrow = c(2, 2))
+plot(Pok_Log.Linear)
+dev.off()
+# Model observation
 summary(Pok_Log.Linear)
 
 ols_step_best_subset(Pok_Log.Linear)
@@ -127,10 +133,10 @@ ols_step_best_subset(Pok_Log.Linear)
 #@ smallest AIC. However, "StepsAttutide" and "Attitude" having the same aspects,
 #@ Thus, we should drop one. According to the result, Drop of "Attitude" only cause
 #@ small rise, so we drop "Attitude" 
-Pok_Linear_final <- lm(PhyscialActivity ~ age + education + StepsAttitude + 
-                         PokemonGo_AppUsage + PokemonRelate_Behaviour,
-                       data = Pok_Grouped)
-summary(Pok_Linear_final)
+#Pok_Linear_final <- lm(PhyscialActivity ~ age + education + StepsAttitude + 
+#                         PokemonGo_AppUsage + PokemonRelate_Behaviour,
+#                       data = Pok_Grouped)
+#summary(Pok_Linear_final)
 
 
 
