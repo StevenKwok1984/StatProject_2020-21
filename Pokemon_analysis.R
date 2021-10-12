@@ -7,16 +7,17 @@ library(psych)
 ###Data Observation and Cleansing###
 ####################################
 
-# The first observation
+# loading dataset
 load("pokemon.Rdata")
-head(pok,1)
+# observe data
+head(pok,3)
 # primary observe of data
 summary(pok)
+# checking number of missing value
+sum(is.na(pok))
 # checking unreasonable items in age
 pok_age_s0 <- pok[pok$age <0,]
 pok_age_s0
-pok_age_l100 <- pok[pok$age >100,]
-pok_age_l100
 #@ This dataset is really good, without error or missing value
 
 # However, according to the article, the records where the answer of 
@@ -100,7 +101,7 @@ boxplot(PhyscialActivity~Gender,
 )
 
 
-Pok_Grouped$PokemonRelate_Behaviour
+
 ########################
 ###Model Constructing###
 ########################

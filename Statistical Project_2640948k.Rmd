@@ -9,6 +9,12 @@ output: word_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r, echo=FALSE}
+library(dplyr)
+library(psych)
+```
+
+
 # Abstract
 
 # Introductaion
