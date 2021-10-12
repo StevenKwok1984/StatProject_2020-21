@@ -17,6 +17,9 @@ library(psych)
 
 # Abstract
 
+
+
+
 # Introductaion
 
 ## Background
@@ -29,12 +32,9 @@ According to multiple researches, Pokemon Go obviously and positively affect the
 
 
 
-
 ## Research Objectives
 
-It is commonly know that Pokemon Go was not designed for public health improvement. That is the reason of the confusion about the relation between Pokemon Go and physical activity. For truth discovering, the entire study was conducted based on four aspects. The relation between frequency of app usage and amount of app usage, firstly, is a main focus. Theoretically, the more the app usage, the higher the opportunity for players doing physical activity (e.g. catching Pokemon, or turning pokestop). Following the application usage aspect, we also discuss the problem in players' characteristic. Since some researches proved that Pokemon Go players tend to join game-related physical activity, instead of physical activity in general (Alessandro Gabbiadini, 2017). The aim is discovering the existence of relations between Pokemon Go players and amount of general physical activity. In fact, the level of physical activity can be affected by various factors, including motivation, education level, and gender. We, thus, want to locate variables associating with the amount of physical activities. Last but not least, 
-
-Are attitudes towards physical activity associated with participants' gender or educational level?
+It is commonly know that Pokemon Go was not designed for public health improvement. That is the reason of the confusion about the relation between Pokemon Go and physical activity. For truth discovering, the entire study was conducted based on four aspects. The relation between frequency of app usage and amount of app usage, firstly, is a main focus. Theoretically, the more the app usage, the higher the opportunity for players doing physical activity (e.g. catching Pokemon, or turning pokestop). Following the application usage aspect, we also discuss the problem in players' characteristic. Since some researches proved that Pokemon Go players tend to join game-related physical activity, instead of physical activity in general (Alessandro Gabbiadini, 2017). The aim is discovering the existence of relations between Pokemon Go players and amount of general physical activity. In fact, the level of physical activity can be affected by various factors, including motivation, education level, and gender. We, thus, want to locate variables associating with the amount of physical activities. Last but not least, we want to examine the effects of the attitude towards physical activity caused by gender or educational level?
 
 
 # Methodology

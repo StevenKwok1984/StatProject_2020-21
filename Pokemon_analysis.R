@@ -100,31 +100,91 @@ boxplot(PhyscialActivity~Gender,
         ylab="Amount of Physical Activity"
 )
 
+dev.off()
+par(mfrow = c(3, 1))
+ggplot(Pok_Grouped, aes(x = social_sharing, y = PhyscialActivity)) +
+        geom_point() +
+        labs(x = "Social Sharing", y = "Amount of Physcial Activity") +
+        geom_smooth(method = "lm", se = F)
+ggplot(Pok_Grouped, aes(x = PokemonGo_AppUsage, y = PhyscialActivity)) +
+        geom_point() +
+        labs(x = "PokemonGo_AppUsage", y = "Amount of Physcial Activity") +
+        geom_smooth(method = "lm", se = F)
+
+ggplot(Pok_Grouped, aes(x = social_sharing, y = PokemonGo_AppUsage)) +
+        geom_point() +
+        labs(x = "Social Sharing", y = "PokemonGo_AppUsage") +
+        geom_smooth(method = "lm", se = F)
+
+
+dev.off()
+
 
 
 ########################
 ###Model Constructing###
 ########################
 
-# library required
-library(olsrr)
+#install.packages("lavaan", dependencies=TRUE)
+#library(lavaan)
 
-###Simple linear model###
+
+
+#library(caret)
+#library(randomForest)
+
+#Pok.RF <- randomForest(PhyscialActivity ~ age + education +
+#                             Gender + Attitude + StepsAttitude +
+#                             PokemonGo_AppUsage +
+#                             PokemonRelate_Behaviour, data = Pok_Grouped)
+
+
+#library(e1071)
+#Pok.svm <- svm(PhyscialActivity ~ ., data = Pok_Grouped, kernel = "linear", 
+#               cost = 10, scale = FALSE)
+#set.seed (1)
+#tune.out = tune(svm , PhyscialActivity~., data=Pok_Grouped ,kernel ="linear", 
+#              ranges =list(cost=c(0.001,0.01,0.1, 1,5,10,100)))
+#summary(tune.out)
+#bestmod = tune.out$best.model
+
+
+
+
+
+###linear model###
 # full model construction
-Pok_Log.Linear <- lm(log(PhyscialActivity) ~ log(age) + log(education) +
-                             log(Gender) + log(Attitude) + log(StepsAttitude) +
-                             log(PokemonGo_AppUsage) + log(social_sharing) +
-                             log(PokemonRelate_Behaviour), data = Pok_Grouped)
+#Pok_Log.Linear <- lm(log(PhyscialActivity) ~ log(age) + log(education) +
+#                             log(Gender) + log(Attitude) + log(StepsAttitude) +
+#                             log(PokemonGo_AppUsage) + log(social_sharing) +
+#                             log(PokemonRelate_Behaviour), data = Pok_Grouped)
+Pok.Linear <- glm(PhyscialActivity ~ ., data = Pok_Grouped)
 
+summary(Pok.Linear)
+
+
+
+
+
+
+
+library(olsrr)
 #assumption checking
 par(mfrow = c(2, 2))
 plot(Pok_Log.Linear)
 dev.off()
 # Model observation
-summary(Pok_Log.Linear)
 
 ols_step_best_subset(Pok_Log.Linear)
 
+# t-test
+Pok_Log.Linear <- lm(log(PhyscialActivity) ~ log(education) +
+                             log(Gender) + log(StepsAttitude) +
+                             log(PokemonGo_AppUsage) + 
+                             log(PokemonRelate_Behaviour), data = Pok_Grouped)
+summary(Pok_Log.Linear)
+
+stepAIC(Pok_Log.Linear)
 
 ##Stepwise Selection
 #stepwise.Pok_Linear <- stepAIC(Pok_Linear, direction = "both", trace = TRUE)
