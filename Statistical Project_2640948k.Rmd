@@ -39,6 +39,9 @@ It is commonly know that Pokemon Go was not designed for public health improveme
 
 ## Data Description
 
+The original data contains 999 records, described by 31 variables. According to the study, there is a variable "ATTENTION_filter", the question for checking concentration of participants. Participants failing to answer "Disagree" will be classified as "non-focus". Thus, those records were filtered. The number of records, in this way, is 981. Both id, submitdate, ipaddr and ATTENTION_filter are not in consideration due to irreverent of objectives. Age is discrete number and gender is nominal data, while the remaining variables are ordinal data. There are six variables (attitude_attitude1 to attitude_attitude6) measuring participants' attitude towards physical activities. Exaples of question is "To promote better health conditions, people may take part in the sporting activities" (measuring scale of all questions were from 1 = "completely disagree" to 7 = "completely agree"). Six variables with "stepsattitude" measuring participants' attitudes in different way, with the scales from 1 = "completely disagree" to 7 = "completely agree".
+
+
 Exploratory Analysis
 e.g. error and out-liner checking, data distribution, relationships between variables.
 
