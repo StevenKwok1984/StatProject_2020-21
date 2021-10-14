@@ -84,7 +84,7 @@ require(Hmisc)
 require(reshape2)
 
 # Start plotting
-#ggpairs(Pok_Grouped)
+ggpairs(Pok_Grouped)
 
 boxplot(PhyscialActivity~education,
         data=Pok_Grouped,
@@ -188,36 +188,53 @@ plot(final.model)
 ###Poisson###
 #############
 
-fullmodel.poisson <- glm(PhyscialActivity ~ ., family="poisson", data=Pok_Grouped)
-final_ols <- ols_step_best_subset(logR.model)
+full_model.Poisson <- glm(PhyscialActivity ~ ., family="poisson", 
+                          data=Pok_Grouped)
+summary(full_model.Poisson)
+par(mfrow = c(2, 2))
+plot(full_model.Poisson)
+
+final_ols <- ols_step_best_subset(full_model.Poisson)
+final_ols
+final.model <- stepAIC(full_model.Poisson)
+summary(final.model)
+par(mfrow = c(2, 2))
+plot(full_model.Poisson)
+
+
+##############
+###Gaussian###
+##############
+full_model.Gaussian <- glm(PhyscialActivity ~ ., family = gaussian(link = "identity"), 
+                          data=Pok_Grouped)
+summary(full_model.Gaussian)
+par(mfrow = c(2, 2))
+plot(full_model.Gaussian)
+
+final_ols <- ols_step_best_subset(full_model.Gaussian)
+final_ols
+final.model <- stepAIC(full_model.Gaussian)
+summary(final.model)
+par(mfrow = c(2, 2))
+plot(final.model)
 
 
 
+###########
+###Gamma###
+###########
+full_model.Gamma <- glm(PhyscialActivity ~ ., family = Gamma, 
+                           data=Pok_Grouped)
+summary(full_model.Gamma)
+par(mfrow = c(2, 2))
+plot(full_model.Gamma)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+final_ols <- ols_step_best_subset(full_model.Gamma)
+final_ols
+final.model <- stepAIC(full_model.Gamma)
+summary(final.model)
+par(mfrow = c(2, 2))
+plot(final.model)
 
 
 
