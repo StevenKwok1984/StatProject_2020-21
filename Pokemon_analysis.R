@@ -126,10 +126,62 @@ dev.off()
 ###Model Constructing###
 ########################
 
-#install.packages("lavaan", dependencies=TRUE)
-#library(lavaan)
+
+###linear model###
+# full model construction
+
+Pok.model <- lm(PhyscialActivity ~ age + education + Gender + Attitude +
+                        StepsAttitude + PokemonGo_AppUsage + PokemonRelate_Behaviour + 
+                        social_sharing, data = Pok_Grouped)
+#Pok.Linear <- glm(log(PhyscialActivity) ~ ., data = Pok_Grouped)
+summary(Pok.model)
+car::vif(Pok.model)
+
+###Model Selection###
+
+library(olsrr)
+#assumption checking
+par(mfrow = c(2, 2))
+plot(Pok.model)
+dev.off()
+# Model observation
+
+final_ols <- ols_step_best_subset(Pok.model)
+final_ols
+final.model <- stepAIC(Pok.model)
+summary(final.model)
+par(mfrow = c(2, 2))
+plot(final.model )
 
 
+###log-transformation###
+
+# response variable
+logR.model <- lm(log(PhyscialActivity) ~ log(age) + log(education) + log(Gender) + log(Attitude) +
+                         log(StepsAttitude) + log(PokemonGo_AppUsage) + log(PokemonRelate_Behaviour) + 
+                         log(social_sharing), data = Pok_Grouped)
+
+final_ols <- ols_step_best_subset(logR.model)
+final_ols
+final.model <- stepAIC(logR.model)
+summary(final.model)
+par(mfrow = c(2, 2))
+plot(final.model )
+
+###log10-transformation###
+
+# response variable
+logR.model <- lm(log(PhyscialActivity) ~ log10(age) + log10(education) + log10(Gender) +
+                         log10(Attitude) + log10(StepsAttitude) +
+                         log10(PokemonGo_AppUsage) + log10(PokemonRelate_Behaviour) + 
+                         log10(social_sharing), data = Pok_Grouped)
+
+final_ols <- ols_step_best_subset(logR.model)
+final_ols
+final.model <- stepAIC(logR.model)
+summary(final.model)
+par(mfrow = c(2, 2))
+plot(final.model )
 
 #library(caret)
 #library(randomForest)
@@ -148,58 +200,6 @@ dev.off()
 #              ranges =list(cost=c(0.001,0.01,0.1, 1,5,10,100)))
 #summary(tune.out)
 #bestmod = tune.out$best.model
-
-
-
-
-
-###linear model###
-# full model construction
-#Pok_Log.Linear <- lm(log(PhyscialActivity) ~ log(age) + log(education) +
-#                             log(Gender) + log(Attitude) + log(StepsAttitude) +
-#                             log(PokemonGo_AppUsage) + log(social_sharing) +
-#                             log(PokemonRelate_Behaviour), data = Pok_Grouped)
-Pok.Linear <- glm(PhyscialActivity ~ ., data = Pok_Grouped)
-
-summary(Pok.Linear)
-
-Pok.Poisson <- glm(PhyscialActivity ~ ., data = Pok_Grouped, family=poisson)
-
-summary(Pok.Poisson)
-
-
-
-library(olsrr)
-#assumption checking
-par(mfrow = c(2, 2))
-plot(Pok_Log.Linear)
-dev.off()
-# Model observation
-
-ols_step_best_subset(Pok_Log.Linear)
-
-# t-test
-Pok_Log.Linear <- lm(log(PhyscialActivity) ~ log(education) +
-                             log(Gender) + log(StepsAttitude) +
-                             log(PokemonGo_AppUsage) + 
-                             log(PokemonRelate_Behaviour), data = Pok_Grouped)
-summary(Pok_Log.Linear)
-
-stepAIC(Pok_Log.Linear)
-
-##Stepwise Selection
-#stepwise.Pok_Linear <- stepAIC(Pok_Linear, direction = "both", trace = TRUE)
-#stepwise.Pok_Linear
-#@ According the AIC criteria, stewise.Pok_Linear model is the best model with 
-#@ smallest AIC. However, "StepsAttutide" and "Attitude" having the same aspects,
-#@ Thus, we should drop one. According to the result, Drop of "Attitude" only cause
-#@ small rise, so we drop "Attitude" 
-#Pok_Linear_final <- lm(PhyscialActivity ~ age + education + StepsAttitude + 
-#                         PokemonGo_AppUsage + PokemonRelate_Behaviour,
-#                       data = Pok_Grouped)
-#summary(Pok_Linear_final)
-
-
 
 #####################################
 ###Data Visualisation of new model###
