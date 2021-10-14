@@ -25,7 +25,6 @@ pok_age_s0
 pok_new <- pok[pok$ATTENTION_filter1=="Disagree",]
 pok_new$ATTENTION_filter1 <- NULL
 summary(pok_new)
-pairs(pok_new)
 
 
 
@@ -85,7 +84,7 @@ require(Hmisc)
 require(reshape2)
 
 # Start plotting
-ggpairs(Pok_Grouped)
+#ggpairs(Pok_Grouped)
 
 boxplot(PhyscialActivity~education,
         data=Pok_Grouped,
@@ -181,7 +180,52 @@ final_ols
 final.model <- stepAIC(logR.model)
 summary(final.model)
 par(mfrow = c(2, 2))
-plot(final.model )
+plot(final.model)
+
+
+
+#############
+###Poisson###
+#############
+
+fullmodel.poisson <- glm(PhyscialActivity ~ ., family="poisson", data=Pok_Grouped)
+final_ols <- ols_step_best_subset(logR.model)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #library(caret)
 #library(randomForest)
