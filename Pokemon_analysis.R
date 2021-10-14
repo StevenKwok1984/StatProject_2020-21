@@ -25,6 +25,7 @@ pok_age_s0
 pok_new <- pok[pok$ATTENTION_filter1=="Disagree",]
 pok_new$ATTENTION_filter1 <- NULL
 summary(pok_new)
+pairs(pok_new)
 
 
 
