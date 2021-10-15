@@ -1,3 +1,6 @@
+###In here, we group variables by row max
+
+
 # import library required
 library(dplyr)
 library(psych)
@@ -48,14 +51,15 @@ alpha(pok_new[19:24], check.keys=TRUE)
 # Pokemon Behviour
 alpha(pok_new[27:29], check.keys=TRUE)
 
+
 #@ Since alpha of behaviour and Pokemon behaviour are "Acceptable"
 #@ we group them together
 
 # variable grouping
-Attitude <- rowMeans(pok_new[7:12])
-StepAttitude <- rowMeans(pok_new[13:18])
-Behaviour <- rowMeans(pok_new[19:24])
-PokemonBehaviour <- rowMeans(pok_new[27:29])
+Attitude <- apply(pok_new[7:12], 1, max)
+StepAttitude <- apply(pok_new[13:18], 1, max)
+Behaviour <- apply(pok_new[19:24], 1, max)
+PokemonBehaviour <- apply(pok_new[27:29], 1, max)
 
 # create new dataset
 Pok_Grouped <- pok_new[c(4:6)]
@@ -103,18 +107,18 @@ boxplot(PhyscialActivity~Gender,
 dev.off()
 par(mfrow = c(3, 1))
 ggplot(Pok_Grouped, aes(x = social_sharing, y = PhyscialActivity)) +
-        geom_point() +
-        labs(x = "Social Sharing", y = "Amount of Physcial Activity") +
-        geom_smooth(method = "lm", se = F)
+  geom_point() +
+  labs(x = "Social Sharing", y = "Amount of Physcial Activity") +
+  geom_smooth(method = "lm", se = F)
 ggplot(Pok_Grouped, aes(x = PokemonGo_AppUsage, y = PhyscialActivity)) +
-        geom_point() +
-        labs(x = "PokemonGo_AppUsage", y = "Amount of Physcial Activity") +
-        geom_smooth(method = "lm", se = F)
+  geom_point() +
+  labs(x = "PokemonGo_AppUsage", y = "Amount of Physcial Activity") +
+  geom_smooth(method = "lm", se = F)
 
 ggplot(Pok_Grouped, aes(x = social_sharing, y = PokemonGo_AppUsage)) +
-        geom_point() +
-        labs(x = "Social Sharing", y = "PokemonGo_AppUsage") +
-        geom_smooth(method = "lm", se = F)
+  geom_point() +
+  labs(x = "Social Sharing", y = "PokemonGo_AppUsage") +
+  geom_smooth(method = "lm", se = F)
 
 
 dev.off()
@@ -130,8 +134,8 @@ dev.off()
 # full model construction
 
 Pok.model <- lm(PhyscialActivity ~ age + education + Gender + Attitude +
-                        StepsAttitude + PokemonGo_AppUsage + PokemonRelate_Behaviour + 
-                        social_sharing, data = Pok_Grouped)
+                  StepsAttitude + PokemonGo_AppUsage + PokemonRelate_Behaviour + 
+                  social_sharing, data = Pok_Grouped)
 #Pok.Linear <- glm(log(PhyscialActivity) ~ ., data = Pok_Grouped)
 summary(Pok.model)
 car::vif(Pok.model)
@@ -157,8 +161,8 @@ plot(final.model )
 
 # response variable
 logR.model <- lm(log(PhyscialActivity) ~ log(age) + log(education) + log(Gender) + log(Attitude) +
-                         log(StepsAttitude) + log(PokemonGo_AppUsage) + log(PokemonRelate_Behaviour) + 
-                         log(social_sharing), data = Pok_Grouped)
+                   log(StepsAttitude) + log(PokemonGo_AppUsage) + log(PokemonRelate_Behaviour) + 
+                   log(social_sharing), data = Pok_Grouped)
 
 final_ols <- ols_step_best_subset(logR.model)
 final_ols
@@ -171,9 +175,9 @@ plot(final.model )
 
 # response variable
 logR.model <- lm(log(PhyscialActivity) ~ log10(age) + log10(education) + log10(Gender) +
-                         log10(Attitude) + log10(StepsAttitude) +
-                         log10(PokemonGo_AppUsage) + log10(PokemonRelate_Behaviour) + 
-                         log10(social_sharing), data = Pok_Grouped)
+                   log10(Attitude) + log10(StepsAttitude) +
+                   log10(PokemonGo_AppUsage) + log10(PokemonRelate_Behaviour) + 
+                   log10(social_sharing), data = Pok_Grouped)
 
 final_ols <- ols_step_best_subset(logR.model)
 final_ols
@@ -206,7 +210,7 @@ plot(full_model.Poisson)
 ###Gaussian###
 ##############
 full_model.Gaussian <- glm(PhyscialActivity ~ ., family = gaussian(link = "identity"), 
-                          data=Pok_Grouped)
+                           data=Pok_Grouped)
 summary(full_model.Gaussian)
 par(mfrow = c(2, 2))
 plot(full_model.Gaussian)
@@ -224,7 +228,7 @@ plot(final.model)
 ###Gamma###
 ###########
 full_model.Gamma <- glm(PhyscialActivity ~ ., family = Gamma, 
-                           data=Pok_Grouped)
+                        data=Pok_Grouped)
 summary(full_model.Gamma)
 par(mfrow = c(2, 2))
 plot(full_model.Gamma)
@@ -278,10 +282,10 @@ ggpairs(Pok.Grouped_New)
 
 par(mfrow = c(2, 3))
 for(i in 1:7){
-        if(i != 2)
-                boxplot(Pok.Grouped_New[,i]~education, data=Pok.Grouped_New)
+  if(i != 2)
+    boxplot(Pok.Grouped_New[,i]~education, data=Pok.Grouped_New)
 }
 for(i in 1:7){
-        if(i != 3)
-                boxplot(Pok.Grouped_New[,i]~Gender, data=Pok.Grouped_New)
+  if(i != 3)
+    boxplot(Pok.Grouped_New[,i]~Gender, data=Pok.Grouped_New)
 }
