@@ -56,10 +56,10 @@ alpha(pok_new[27:29], check.keys=TRUE)
 #@ we group them together
 
 # variable grouping
-Attitude <- apply(pok_new[7:12], 1, max)
-StepAttitude <- apply(pok_new[13:18], 1, max)
-Behaviour <- apply(pok_new[19:24], 1, max)
-PokemonBehaviour <- apply(pok_new[27:29], 1, max)
+Attitude <- apply(pok_new[7:12], 1, median)
+StepAttitude <- apply(pok_new[13:18], 1, median)
+Behaviour <- apply(pok_new[19:24], 1, median)
+PokemonBehaviour <- apply(pok_new[27:29], 1, median)
 
 # create new dataset
 Pok_Grouped <- pok_new[c(4:6)]
@@ -154,22 +154,20 @@ final_ols
 final.model <- stepAIC(Pok.model)
 summary(final.model)
 par(mfrow = c(2, 2))
-plot(final.model )
+plot(final.model)
 
 
 ###log-transformation###
 
 # response variable
-logR.model <- lm(log(PhyscialActivity) ~ log(age) + log(education) + log(Gender) + log(Attitude) +
-                   log(StepsAttitude) + log(PokemonGo_AppUsage) + log(PokemonRelate_Behaviour) + 
-                   log(social_sharing), data = Pok_Grouped)
+logR.model <- lm(log(PhyscialActivity) ~ ., data = Pok_Grouped)
 
 final_ols <- ols_step_best_subset(logR.model)
 final_ols
 final.model <- stepAIC(logR.model)
 summary(final.model)
 par(mfrow = c(2, 2))
-plot(final.model )
+plot(final.model)
 
 ###log10-transformation###
 
