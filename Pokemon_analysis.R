@@ -114,7 +114,7 @@ dev.off()
 ###linear model###
 
 # full model construction
-Pok.Linear <- glm(PhyscialActivity ~ ., family = gaussian(link="identity"), data = Pok_Grouped)
+Pok.Linear <- glm(PhyscialActivity ~ .^2, family = gaussian(link="identity"), data = Pok_Grouped)
 summary(Pok.Linear)
 vif(Pok.Linear)
 
@@ -124,8 +124,6 @@ plot(Pok.Linear)
 dev.off()
 
 ## variable selection
-# library required
-library(olsrr)
 
 # use multiple for discovering best model
 final_ols <- ols_step_best_subset(Pok.Linear)
@@ -141,7 +139,7 @@ dev.off()
 
 ###Gamma###
 
-Pok.Gamma <- glm(PhyscialActivity ~ ., family = Gamma(link="identity"), 
+Pok.Gamma <- glm(PhyscialActivity ~ .^2, family = Gamma(link="identity"), 
                            data=Pok_Grouped)
 summary(Pok.Gamma)
 par(mfrow = c(2, 2))
