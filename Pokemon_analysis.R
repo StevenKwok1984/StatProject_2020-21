@@ -114,7 +114,7 @@ dev.off()
 ###linear model###
 
 # full model construction
-Pok.Linear <- glm(PhyscialActivity ~ ., data = Pok_Grouped)
+Pok.Linear <- glm(PhyscialActivity ~ ., family = gaussian(link="identity"), data = Pok_Grouped)
 summary(Pok.Linear)
 vif(Pok.Linear)
 
@@ -141,7 +141,7 @@ dev.off()
 
 ###Gamma###
 
-Pok.Gamma <- glm(PhyscialActivity ~ ., family = Gamma(link=log), 
+Pok.Gamma <- glm(PhyscialActivity ~ ., family = Gamma(link="identity"), 
                            data=Pok_Grouped)
 summary(Pok.Gamma)
 par(mfrow = c(2, 2))
