@@ -141,7 +141,7 @@ dev.off()
 
 ###Gamma###
 
-Pok.Gamma <- glm(PhyscialActivity ~ ., family = Gamma, 
+Pok.Gamma <- glm(PhyscialActivity ~ ., family = Gamma(link=log), 
                            data=Pok_Grouped)
 summary(Pok.Gamma)
 par(mfrow = c(2, 2))

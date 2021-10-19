@@ -1,4 +1,4 @@
-###In here, we group variables by row max
+###In here, we group variables by row sum
 
 
 # import library required
@@ -105,23 +105,6 @@ boxplot(PhyscialActivity~Gender,
 )
 
 dev.off()
-par(mfrow = c(3, 1))
-ggplot(Pok_Grouped, aes(x = social_sharing, y = PhyscialActivity)) +
-  geom_point() +
-  labs(x = "Social Sharing", y = "Amount of Physcial Activity") +
-  geom_smooth(method = "lm", se = F)
-ggplot(Pok_Grouped, aes(x = PokemonGo_AppUsage, y = PhyscialActivity)) +
-  geom_point() +
-  labs(x = "PokemonGo_AppUsage", y = "Amount of Physcial Activity") +
-  geom_smooth(method = "lm", se = F)
-
-ggplot(Pok_Grouped, aes(x = social_sharing, y = PokemonGo_AppUsage)) +
-  geom_point() +
-  labs(x = "Social Sharing", y = "PokemonGo_AppUsage") +
-  geom_smooth(method = "lm", se = F)
-
-
-dev.off()
 
 
 
@@ -129,134 +112,68 @@ dev.off()
 ###Model Constructing###
 ########################
 
-
 ###linear model###
+
 # full model construction
+Pok.Linear <- glm(PhyscialActivity ~ ., data = Pok_Grouped)
+summary(Pok.Linear)
+vif(Pok.Linear)
 
-Pok.model <- lm(PhyscialActivity ~ age + education + Gender + Attitude +
-                  StepsAttitude + PokemonGo_AppUsage + PokemonRelate_Behaviour + 
-                  social_sharing, data = Pok_Grouped)
-#Pok.Linear <- glm(log(PhyscialActivity) ~ ., data = Pok_Grouped)
-summary(Pok.model)
-car::vif(Pok.model)
-
-###Model Selection###
-
-library(olsrr)
 #assumption checking
 par(mfrow = c(2, 2))
-plot(Pok.model)
+plot(Pok.Linear)
 dev.off()
-# Model observation
 
-final_ols <- ols_step_best_subset(Pok.model)
+## variable selection
+# library required
+library(olsrr)
+
+# use multiple for discovering best model
+final_ols <- ols_step_best_subset(Pok.Linear)
 final_ols
-final.model <- stepAIC(Pok.model)
-summary(final.model)
+Selected_Pok.Linear <- stepAIC(Pok.Linear)
+# model observation
+summary(Selected_Pok.Linear)
+# assumption checking
 par(mfrow = c(2, 2))
-plot(final.model)
+plot(Selected_Pok.Linear)
+dev.off()
 
 
-###log-transformation###
+###Gamma###
 
-# response variable
-logR.model <- lm(log(PhyscialActivity) ~ ., data = Pok_Grouped)
+Pok.Gamma <- glm(PhyscialActivity ~ ., family = Gamma, 
+                 data=Pok_Grouped)
+summary(Pok.Gamma)
+par(mfrow = c(2, 2))
+plot(Pok.Gamma)
 
-final_ols <- ols_step_best_subset(logR.model)
+final_ols <- ols_step_best_subset(Pok.Gamma)
 final_ols
-final.model <- stepAIC(logR.model)
-summary(final.model)
+Seleced_Pok.Gamma <- stepAIC(Pok.Gamma)
+summary(Seleced_Pok.Gamma)
 par(mfrow = c(2, 2))
-plot(final.model)
-
-###log10-transformation###
-
-# response variable
-logR.model <- lm(log(PhyscialActivity) ~ log10(age) + log10(education) + log10(Gender) +
-                   log10(Attitude) + log10(StepsAttitude) +
-                   log10(PokemonGo_AppUsage) + log10(PokemonRelate_Behaviour) + 
-                   log10(social_sharing), data = Pok_Grouped)
-
-final_ols <- ols_step_best_subset(logR.model)
-final_ols
-final.model <- stepAIC(logR.model)
-summary(final.model)
-par(mfrow = c(2, 2))
-plot(final.model)
-
+plot(Seleced_Pok.Gamma)
 
 
 #############
 ###Poisson###
 #############
 
-full_model.Poisson <- glm(PhyscialActivity ~ ., family="poisson", 
+Pok.Poisson <- glm(PhyscialActivity ~ ., family="poisson", 
                           data=Pok_Grouped)
-summary(full_model.Poisson)
+summary(Pok.Poisson)
 par(mfrow = c(2, 2))
-plot(full_model.Poisson)
+plot(Pok.Poisson)
 
-final_ols <- ols_step_best_subset(full_model.Poisson)
+final_ols <- ols_step_best_subset(Pok.Poisson)
 final_ols
-final.model <- stepAIC(full_model.Poisson)
-summary(final.model)
+Pok.Poisson_final <- stepAIC(Pok.Poisson)
+summary(Pok.Poisson_final)
 par(mfrow = c(2, 2))
-plot(full_model.Poisson)
+plot(Pok.Poisson_final)
 
 
-##############
-###Gaussian###
-##############
-full_model.Gaussian <- glm(PhyscialActivity ~ ., family = gaussian(link = "identity"), 
-                           data=Pok_Grouped)
-summary(full_model.Gaussian)
-par(mfrow = c(2, 2))
-plot(full_model.Gaussian)
-
-final_ols <- ols_step_best_subset(full_model.Gaussian)
-final_ols
-final.model <- stepAIC(full_model.Gaussian)
-summary(final.model)
-par(mfrow = c(2, 2))
-plot(final.model)
-
-
-
-###########
-###Gamma###
-###########
-full_model.Gamma <- glm(PhyscialActivity ~ ., family = Gamma, 
-                        data=Pok_Grouped)
-summary(full_model.Gamma)
-par(mfrow = c(2, 2))
-plot(full_model.Gamma)
-
-final_ols <- ols_step_best_subset(full_model.Gamma)
-final_ols
-final.model <- stepAIC(full_model.Gamma)
-summary(final.model)
-par(mfrow = c(2, 2))
-plot(final.model)
-
-
-
-#library(caret)
-#library(randomForest)
-
-#Pok.RF <- randomForest(PhyscialActivity ~ age + education +
-#                             Gender + Attitude + StepsAttitude +
-#                             PokemonGo_AppUsage +
-#                             PokemonRelate_Behaviour, data = Pok_Grouped)
-
-
-#library(e1071)
-#Pok.svm <- svm(PhyscialActivity ~ ., data = Pok_Grouped, kernel = "linear", 
-#               cost = 10, scale = FALSE)
-#set.seed (1)
-#tune.out = tune(svm , PhyscialActivity~., data=Pok_Grouped ,kernel ="linear", 
-#              ranges =list(cost=c(0.001,0.01,0.1, 1,5,10,100)))
-#summary(tune.out)
-#bestmod = tune.out$best.model
 
 #####################################
 ###Data Visualisation of new model###
