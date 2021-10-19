@@ -1,6 +1,8 @@
 # import library required
 library(dplyr)
 library(psych)
+library(olsrr)
+library(car)
 
 
 
@@ -102,22 +104,6 @@ boxplot(PhyscialActivity~Gender,
 )
 
 dev.off()
-par(mfrow = c(3, 1))
-ggplot(Pok_Grouped, aes(x = social_sharing, y = PhyscialActivity)) +
-        geom_point() +
-        labs(x = "Social Sharing", y = "Amount of Physcial Activity") +
-        geom_smooth(method = "lm", se = F)
-ggplot(Pok_Grouped, aes(x = PokemonGo_AppUsage, y = PhyscialActivity)) +
-        geom_point() +
-        labs(x = "PokemonGo_AppUsage", y = "Amount of Physcial Activity") +
-        geom_smooth(method = "lm", se = F)
-
-ggplot(Pok_Grouped, aes(x = social_sharing, y = PokemonGo_AppUsage)) +
-        geom_point() +
-        labs(x = "Social Sharing", y = "PokemonGo_AppUsage") +
-        geom_smooth(method = "lm", se = F)
-
-dev.off()
 
 
 
@@ -128,13 +114,13 @@ dev.off()
 ###linear model###
 
 # full model construction
-Pok.model <- lm(PhyscialActivity ~ ., data = Pok_Grouped)
-summary(Pok.model)
-car::vif(Pok.model)
+Pok.Linear <- glm(PhyscialActivity ~ ., data = Pok_Grouped)
+summary(Pok.Linear)
+vif(Pok.Linear)
 
 #assumption checking
 par(mfrow = c(2, 2))
-plot(Pok.model)
+plot(Pok.Linear)
 dev.off()
 
 ## variable selection
@@ -142,30 +128,31 @@ dev.off()
 library(olsrr)
 
 # use multiple for discovering best model
-final_ols <- ols_step_best_subset(Pok.model)
+final_ols <- ols_step_best_subset(Pok.Linear)
 final_ols
-final.model <- stepAIC(Pok.model)
+Selected_Pok.Linear <- stepAIC(Pok.Linear)
 # model observation
-summary(final.model)
+summary(Selected_Pok.Linear)
 # assumption checking
 par(mfrow = c(2, 2))
-plot(final.model )
+plot(Selected_Pok.Linear)
+dev.off()
 
 
 ###Gamma###
 
-full_model.Gamma <- glm(PhyscialActivity ~ ., family = Gamma, 
+Pok.Gamma <- glm(PhyscialActivity ~ ., family = Gamma, 
                            data=Pok_Grouped)
-summary(full_model.Gamma)
+summary(Pok.Gamma)
 par(mfrow = c(2, 2))
-plot(full_model.Gamma)
+plot(Pok.Gamma)
 
-final_ols <- ols_step_best_subset(full_model.Gamma)
+final_ols <- ols_step_best_subset(Pok.Gamma)
 final_ols
-final.model <- stepAIC(full_model.Gamma)
-summary(final.model)
+Seleced_Pok.Gamma <- stepAIC(Pok.Gamma)
+summary(Seleced_Pok.Gamma)
 par(mfrow = c(2, 2))
-plot(final.model)
+plot(Seleced_Pok.Gamma)
 
 
 
