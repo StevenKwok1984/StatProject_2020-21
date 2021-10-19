@@ -177,6 +177,29 @@ par(mfrow = c(2, 2))
 plot(Seleced_Pok.Gamma)
 
 
+###inverse-gaussian model###
+
+# full model construction
+Pok.invGaussian <- glm(PhyscialActivity ~ ., family=inverse.gaussian(link="identity")
+                  , data = Pok_Grouped)
+summary(Pok.invGaussian)
+
+#assumption checking
+par(mfrow = c(2, 2))
+plot(Pok.invGaussian)
+dev.off()
+
+## variable selection
+final_ols <- ols_step_best_subset(Pok.invGaussian)
+# use multiple for discovering best model
+Selected_Pok.invGaussian <- stepAIC(Pok.invGaussian)
+# model observation
+summary(Selected_Pok.invGaussian)
+# assumption checking
+par(mfrow = c(2, 2))
+plot(Selected_Pok.invGaussian)
+dev.off()
+
 
 #####################################
 ###Data Visualisation of new model###
