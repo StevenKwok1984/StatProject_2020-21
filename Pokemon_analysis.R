@@ -3,6 +3,7 @@ library(dplyr)
 library(psych)
 
 
+
 ####################################
 ###Data Observation and Cleansing###
 ####################################
@@ -116,7 +117,6 @@ ggplot(Pok_Grouped, aes(x = social_sharing, y = PokemonGo_AppUsage)) +
         labs(x = "Social Sharing", y = "PokemonGo_AppUsage") +
         geom_smooth(method = "lm", se = F)
 
-
 dev.off()
 
 
@@ -125,32 +125,90 @@ dev.off()
 ###Model Constructing###
 ########################
 
-
 ###linear model###
-# full model construction
 
-Pok.model <- lm(PhyscialActivity ~ age + education + Gender + Attitude +
-                        StepsAttitude + PokemonGo_AppUsage + PokemonRelate_Behaviour + 
-                        social_sharing, data = Pok_Grouped)
-#Pok.Linear <- glm(log(PhyscialActivity) ~ ., data = Pok_Grouped)
+# full model construction
+Pok.model <- lm(PhyscialActivity ~ ., data = Pok_Grouped)
 summary(Pok.model)
 car::vif(Pok.model)
 
-###Model Selection###
-
-library(olsrr)
 #assumption checking
 par(mfrow = c(2, 2))
 plot(Pok.model)
 dev.off()
-# Model observation
 
+## variable selection
+# library required
+library(olsrr)
+
+# use multiple for discovering best model
 final_ols <- ols_step_best_subset(Pok.model)
 final_ols
 final.model <- stepAIC(Pok.model)
+# model observation
 summary(final.model)
+# assumption checking
 par(mfrow = c(2, 2))
 plot(final.model )
+
+
+###Gamma###
+
+full_model.Gamma <- glm(PhyscialActivity ~ ., family = Gamma, 
+                           data=Pok_Grouped)
+summary(full_model.Gamma)
+par(mfrow = c(2, 2))
+plot(full_model.Gamma)
+
+final_ols <- ols_step_best_subset(full_model.Gamma)
+final_ols
+final.model <- stepAIC(full_model.Gamma)
+summary(final.model)
+par(mfrow = c(2, 2))
+plot(final.model)
+
+
+
+#####################################
+###Data Visualisation of new model###
+#####################################
+
+###assumption checking###
+
+par(mfrow = c(2, 2))
+plot(Pok_Linear)
+dev.off()
+par(mfrow = c(2, 2))
+plot(Pok_Linear_final)
+
+###Relations visualisation###
+
+Pok.Grouped_New <- Pok_Grouped
+Pok.Grouped_New$Attitude <- NULL
+Pok.Grouped_New$social_sharing <- NULL
+
+ggpairs(Pok.Grouped_New)
+
+par(mfrow = c(2, 3))
+for(i in 1:7){
+        if(i != 2)
+                boxplot(Pok.Grouped_New[,i]~education, data=Pok.Grouped_New)
+}
+for(i in 1:7){
+        if(i != 3)
+                boxplot(Pok.Grouped_New[,i]~Gender, data=Pok.Grouped_New)
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 ###log-transformation###
@@ -206,7 +264,7 @@ plot(full_model.Poisson)
 ###Gaussian###
 ##############
 full_model.Gaussian <- glm(PhyscialActivity ~ ., family = gaussian(link = "identity"), 
-                          data=Pok_Grouped)
+                           data=Pok_Grouped)
 summary(full_model.Gaussian)
 par(mfrow = c(2, 2))
 plot(full_model.Gaussian)
@@ -217,26 +275,6 @@ final.model <- stepAIC(full_model.Gaussian)
 summary(final.model)
 par(mfrow = c(2, 2))
 plot(final.model)
-
-
-
-###########
-###Gamma###
-###########
-full_model.Gamma <- glm(PhyscialActivity ~ ., family = Gamma, 
-                           data=Pok_Grouped)
-summary(full_model.Gamma)
-par(mfrow = c(2, 2))
-plot(full_model.Gamma)
-
-final_ols <- ols_step_best_subset(full_model.Gamma)
-final_ols
-final.model <- stepAIC(full_model.Gamma)
-summary(final.model)
-par(mfrow = c(2, 2))
-plot(final.model)
-
-
 
 #library(caret)
 #library(randomForest)
@@ -255,33 +293,3 @@ plot(final.model)
 #              ranges =list(cost=c(0.001,0.01,0.1, 1,5,10,100)))
 #summary(tune.out)
 #bestmod = tune.out$best.model
-
-#####################################
-###Data Visualisation of new model###
-#####################################
-
-###assumption checking###
-
-par(mfrow = c(2, 2))
-plot(Pok_Linear)
-dev.off()
-par(mfrow = c(2, 2))
-plot(Pok_Linear_final)
-
-###Relations visualisation###
-
-Pok.Grouped_New <- Pok_Grouped
-Pok.Grouped_New$Attitude <- NULL
-Pok.Grouped_New$social_sharing <- NULL
-
-ggpairs(Pok.Grouped_New)
-
-par(mfrow = c(2, 3))
-for(i in 1:7){
-        if(i != 2)
-                boxplot(Pok.Grouped_New[,i]~education, data=Pok.Grouped_New)
-}
-for(i in 1:7){
-        if(i != 3)
-                boxplot(Pok.Grouped_New[,i]~Gender, data=Pok.Grouped_New)
-}
