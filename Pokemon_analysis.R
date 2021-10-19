@@ -114,9 +114,8 @@ dev.off()
 ###linear model###
 
 # full model construction
-Pok.Linear <- glm(PhyscialActivity ~ .^2, family = gaussian(link="identity"), data = Pok_Grouped)
+Pok.Linear <- glm(PhyscialActivity ~ .^2, data = Pok_Grouped)
 summary(Pok.Linear)
-vif(Pok.Linear)
 
 #assumption checking
 par(mfrow = c(2, 2))
@@ -124,16 +123,38 @@ plot(Pok.Linear)
 dev.off()
 
 ## variable selection
-
-# use multiple for discovering best model
 final_ols <- ols_step_best_subset(Pok.Linear)
-final_ols
+# use multiple for discovering best model
 Selected_Pok.Linear <- stepAIC(Pok.Linear)
 # model observation
 summary(Selected_Pok.Linear)
 # assumption checking
 par(mfrow = c(2, 2))
 plot(Selected_Pok.Linear)
+dev.off()
+
+
+###log-linear model###
+
+# full model construction
+Pok.Log_Linear <- glm(log(PhyscialActivity) ~ .^2, data = Pok_Grouped)
+summary(Pok.Log_Linear)
+
+#assumption checking
+par(mfrow = c(2, 2))
+plot(Pok.Log_Linear)
+dev.off()
+
+## variable selection
+# use multiple for discovering best model
+final_ols <- ols_step_best_subset(Pok.Log_Linear)
+# apply AIC
+Selected_Pok.Log_Linear <- stepAIC(Pok.Log_Linear)
+# model observation
+summary(Selected_Pok.Log_Linear)
+# assumption checking
+par(mfrow = c(2, 2))
+plot(Selected_Pok.Log_Linear)
 dev.off()
 
 
@@ -145,10 +166,13 @@ summary(Pok.Gamma)
 par(mfrow = c(2, 2))
 plot(Pok.Gamma)
 
+## variable selection
+# use multiple for discovering best model
 final_ols <- ols_step_best_subset(Pok.Gamma)
-final_ols
 Seleced_Pok.Gamma <- stepAIC(Pok.Gamma)
+# model observation
 summary(Seleced_Pok.Gamma)
+# assumption checking
 par(mfrow = c(2, 2))
 plot(Seleced_Pok.Gamma)
 
