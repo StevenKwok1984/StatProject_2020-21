@@ -42,9 +42,9 @@ summary(pok_new)
 ###Justify the grouping###
 
 # Calculate Cronbach's Alpha
-# Attitude
+## Attitude
 alpha(pok_new[7:12], check.keys=TRUE)
-# steps Attitude
+## steps Attitude
 alpha(pok_new[13:18], check.keys=TRUE)
 # Behaviour
 alpha(pok_new[19:24], check.keys=TRUE)
@@ -56,14 +56,14 @@ alpha(pok_new[27:29], check.keys=TRUE)
 
 # variable grouping
 Attitude <- rowMeans(pok_new[7:12])
-StepAttitude <- rowMeans(pok_new[13:18])
+StepsAttitude <- rowMeans(pok_new[13:18])
 Behaviour <- rowMeans(pok_new[19:24])
 PokemonBehaviour <- rowMeans(pok_new[27:29])
 
 # create new dataset
 Pok_Grouped <- pok_new[c(4:6)]
 Pok_Grouped$Attitude <- Attitude
-Pok_Grouped$StepsAttitude <- StepAttitude
+Pok_Grouped$StepsAttitude <- StepsAttitude
 Pok_Grouped$PhyscialActivity <- Behaviour
 Pok_Grouped$PokemonGo_AppUsage <- pok_new$app_usage_PokemonGoApp_pokemonusage1
 Pok_Grouped$social_sharing <- pok_new$social_sharing
@@ -205,19 +205,8 @@ dev.off()
 ###Data Visualisation of new model###
 #####################################
 
-###assumption checking###
-
-par(mfrow = c(2, 2))
-plot(Pok_Linear)
-dev.off()
-par(mfrow = c(2, 2))
-plot(Pok_Linear_final)
 
 ###Relations visualisation###
-
-Pok.Grouped_New <- Pok_Grouped
-Pok.Grouped_New$Attitude <- NULL
-Pok.Grouped_New$social_sharing <- NULL
 
 ggpairs(Pok.Grouped_New)
 
