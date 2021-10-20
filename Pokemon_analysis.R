@@ -137,7 +137,7 @@ dev.off()
 ###log-linear model###
 
 # full model construction
-Pok.Log_Linear <- glm(log(PhyscialActivity) ~ .^2, data = Pok_Grouped)
+Pok.Log_Linear <- glm(log10(PhyscialActivity) ~ .^2, data = Pok_Grouped)
 summary(Pok.Log_Linear)
 
 #assumption checking
