@@ -46,7 +46,7 @@ summary(pok_new)
 alpha(pok_new[7:12], check.keys=TRUE)
 ## steps Attitude
 alpha(pok_new[13:18], check.keys=TRUE)
-# Behaviour
+# Physical Behaviour
 alpha(pok_new[19:24], check.keys=TRUE)
 # Pokemon Behviour
 alpha(pok_new[27:29], check.keys=TRUE)
