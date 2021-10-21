@@ -6,13 +6,18 @@ output: word_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ```{r include=FALSE}
 library(dplyr)
 library(psych)
-load("pokemon.Rdata")
+library(ggplot2)
+library(GGally)
+require(foreign)
+require(MASS)
+require(Hmisc)
+require(reshape2)
 ```
 
 
@@ -41,18 +46,48 @@ It is commonly know that Pokemon Go was not designed for public health improveme
 
 ## Data Description and Processing
 
+```{r include=FALSE}
+# loading dataset
+load("pokemon.Rdata")
+```
+
 The data was obtained from a study, carried out following the code of ethics of the world medical association (Declaration of Helsinki) for studies using human as data. Amazon Mechanical Turk (MTurk), an internet-based platform offering online participant pool, was applied for data collection (Buhrmester, Kwang, & Gosling, 2011; Paolacci & Chandler, 2014). The original data contains 999 records, described by 31 variables. Prior to processing data, we examine the number of missing values (which is `r sum(is.na(pok))`), as well as filtering out records in accordance with the variable "ATTENTION_filter1".
+
+```{r include=FALSE}
+pok_new <- pok[pok$ATTENTION_filter1=="Disagree",]
+pok_new$ATTENTION_filter1 <- NULL
+```
 
 "ATTENTION_filter1" is a variable for filtering out non-focus participants as Mechanical Turk experiment was applied. In spite of the convenience as well as limitless of time and location, Mechanical Turk experiment cannot guarantee that participants are paying attention as the survey was completed online (Jennifer Jacquet, 2011). Ensuring only data from focusing-on-survey participants were collected, the item symboled by "ATTENTION_filter1"  was used. If failed choosing "Disagree" in this question, the records will be removed due to being classified as non-focus records. The remaining records inside the dataset is 981. After primary data cleaning, we transform all columns into integer score, according to the scales above-listed. This subjective assigning method is plausible for applying interval scale and the concept of distance (Chaowei Yang, 2014). Both id, submitdate, ipaddr and ATTENTION_filter are not in consideration due to irreverent of objectives. Thus, Twenty-eight variables, for further grouping and analysis, will be discussed below.
 
+```{r include=FALSE}
+pok_new[,4:30] <- pok_new[,4:30] %>% mutate_if(is.factor,as.numeric)
+```
 
 Despite Age and gender, discrete number and nominal data respectively, all the others are ordinal variables. Both "Frequency of App Usage" and "How often sharing on social media" are ordinal data, anchored with the scale from 1 = "never" to 7 = "very often". Former accessing the extent of players using Pokemon Go per month, while the latter demonstrate the frequency players sharing their achievements on social media. Those variables mentioned above were treated as independent variables, while the remaining variables will be grouped by row mean, in accordance with the result of Cronbach's alpha. Cronbach's alpha, also known as alpha reliability, is a measure for assessing strength of internal consistency, of several items or variables. The alpha score was calculated by correlating the score for every items with the total score for related observations, following the comparison of the variance of individual item scores (Cronbach Lee, 1951). The formula is:
-"$\alpha = (\frac{k}{k+1})(1-\frac{\sum_{i=1}^{k} {\sigma^{2}_{y_i}}}{\sigma^{2}_{x}})$" 
 
+"$\alpha = (\frac{k}{k+1})(1-\frac{\sum_{i=1}^{k} {\sigma^{2}_{y_i}}}{\sigma^{2}_{x}})$" 
 
 Where $k$ is number of scale items, $\sigma^2_{y_i}$ is to the variance associated with item $i$, and $\sigma^{2}_{x}$ denoted as the variance associated with the observed total scores (Chelsea Goforth, 2015). In accordance with Rule of Thumb, if the alpha score is between 0.7 and 0.8, the grouping process is plausible (Stephanie Glen, 2021). Proving by alpha score, We group variables having strong internal consistency by mean of each instances. In supplement, group-by-mean method (Underhill L.G, 1998) was applied as we prefer grouping variables, without missing much information(like median)(Akhihesh Ganti, 2021) or altering the scale(Daniel McNeish & Melissa Gordon Wolf, 2020). The details were mentioned below.
 
-There are 12 variables, grouped as $Attitude$, measuring participants' attitude towards physical activities ($\alpha = 0.76$). (Scale of all questions were from 1 = "completely disagree" to 7 = "completely agree"). Players' physically behavior was assessed in two aspects, recency and frequency ($\alpha = 0.77$). The first three items for measuring recency of participants' physical activity were "When was the last time you had (1) a walk for more than 30 min/(2) had a run/(3) had a bike ride to get some exercise?". (The scale for those questions is 1="more than one month ago", 2="about four weeks ago", 3="about three weeks ago", 4="about two weeks ago", 5="about  one  week  ago", 6="during  the  last  week" and 7="yesterday".) For measuring frequency, the following three questions were adopted: "How many times have you had (1) a walk for more than 30 min/ (2) had a run/ (3) had a bike ride to get some exercise during the last month?, with the scale from 1="never" to 7="every day". Both former and latter were transformed as one variable, $PokemonGo_Relate.Behaviour$. The remaining three variables, names starting with "PokemonPastBehaviour", were used for assessing participants' physical behavior relating to Pokemon Go ($\alpha = 0.7$). Questions represented by these three variables were "How many times have you walked more than 30 min/ had a run/ had a bike ride with the intent of searching for Pokemon Go during the last month?" ( anchored with 1="never", 2="two times",3="from three to five times",4="from six to eight times", 5="from nine to eleven times", 6="from twelve to fourteen times"and 7="every day"). Those variables were grouped as $PokemonGo_Relate.Behaviour$. Back of grouping, the new data set contains eight variables and 981 records. Based on the above data set, Gamma distribution model was applied.
+```{r include=FALSE}
+# variable grouping
+Attitude <- rowMeans(pok_new[7:18])
+Behaviour <- rowMeans(pok_new[19:24])
+PokemonBehaviour <- rowMeans(pok_new[27:29])
+```
+There are 12 variables, grouped as $Attitude$, measuring participants' attitude towards physical activities ($\alpha = 0.76$). (Scale of all questions were from 1 = "completely disagree" to 7 = "completely agree"). Players' physically behavior was assessed in two aspects, recency and frequency ($\alpha = 0.77$). The first three items for measuring recency of participants' physical activity were "When was the last time you had (1) a walk for more than 30 min/(2) had a run/(3) had a bike ride to get some exercise?". (The scale for those questions is 1="more than one month ago", 2="about four weeks ago", 3="about three weeks ago", 4="about two weeks ago", 5="about  one  week  ago", 6="during  the  last  week" and 7="yesterday".) For measuring frequency, the following three questions were adopted: "How many times have you had (1) a walk for more than 30 min/ (2) had a run/ (3) had a bike ride to get some exercise during the last month?, with the scale from 1="never" to 7="every day". Both former and latter were transformed as one variable, $PokemonGo_Relate.Behaviour$. The remaining three variables, names starting with "PokemonPastBehaviour", were used for assessing participants' physical behavior relating to Pokemon Go ($\alpha = 0.7$). Questions represented by these three variables were "How many times have you walked more than 30 min/ had a run/ had a bike ride with the intent of searching for Pokemon Go during the last month?" ( anchored with 1="never", 2="two times",3="from three to five times",4="from six to eight times", 5="from nine to eleven times", 6="from twelve to fourteen times"and 7="every day"). Those variables were grouped as $PokemonGo_Relate.Behaviour$. Back of grouping, the new data set contains eight variables and 981 records. Prior to model selection, we look at the summary and plots
+
+```{r echo=FALSE}
+# create new dataset
+Pok_Grouped <- pok_new[c(4:6)]
+Pok_Grouped$Attitude <- Attitude
+Pok_Grouped$PhyscialActivity <- Behaviour
+Pok_Grouped$PokemonGo_AppUsage <- pok_new$app_usage_PokemonGoApp_pokemonusage1
+Pok_Grouped$social_sharing <- pok_new$social_sharing
+Pok_Grouped$PokemonGo_Relate.Behaviour <- PokemonBehaviour
+summary(Pok_Grouped)
+```
 
 \newpage
 
@@ -67,12 +102,18 @@ ${f(y) = \frac{1}{\Gamma(\nu)} \lambda^{\nu}y^{\nu - 1} e^{-\lambda y}~~~~~~~~~y
 * $\lambda$ denote the scale of distribution
 * $\Gamma(.)$ represent the Gamma function of data
 
+Gamma distribution was applied due to several reasons. To begin with, all of the variables inside data set were positive. Gamma distribution, in reality, is designed for positive values (Julian Faraway, 2016). Moreover, when looking at the assumption plots multiple linear model, we observed 
 
-
-
-
-
-
+```{r echo=FALSE}
+# full model construction
+Pok.Linear <- glm(PhyscialActivity ~ .^2, data = Pok_Grouped)
+## variable selection
+# use multiple for discovering best model
+Selected_Pok.Linear <- stepAIC(Pok.Linear)
+# assumption checking
+par(mfrow = c(2, 2))
+plot(Selected_Pok.Linear)
+```
 
 
 
