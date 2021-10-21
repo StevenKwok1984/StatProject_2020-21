@@ -63,7 +63,7 @@ Pok_Grouped$Attitude <- Attitude
 Pok_Grouped$PhyscialActivity <- Behaviour
 Pok_Grouped$PokemonGo_AppUsage <- pok_new$app_usage_PokemonGoApp_pokemonusage1
 Pok_Grouped$social_sharing <- pok_new$social_sharing
-Pok_Grouped$PokemonRelate_Behaviour <- PokemonBehaviour
+Pok_Grouped$PokemonGo_Relate.Behaviour <- PokemonBehaviour
 head(Pok_Grouped)
 
 summary(Pok_Grouped)
