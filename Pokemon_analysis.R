@@ -158,7 +158,7 @@ dev.off()
 
 ###Gamma###
 
-Pok.Gamma <- glm(PhyscialActivity ~ .^2, family = Gamma(link="identity"), 
+Pok.Gamma <- glm(PhyscialActivity ~ ., family = Gamma(link="identity"), 
                            data=Pok_Grouped)
 ## variable selection
 # use multiple for discovering best model
