@@ -21,7 +21,7 @@ load("pokemon.Rdata")
 
 # Introductaion
 
-## Background
+## Background Information
 
 It is well known that sport is essential for individual's physical health. With sport, we can train our muscles and respiratory, as well as enhancing immunity (Ornulf Seippel. 2006). Urbanizes, however, do lack of exercise due to various reasons. such as job character, change of entertainment way and long working period. In this way, the risk of obesity, depression, high blood pressures, as well as a series of cardiovascular diseases increased rapidly, being harmful to public health. For solving health issues, augmented reality (AR) videos games are in consideration. Augmented reality is an extended version of VR. It combines virtual elements with real world, through the assist of visual devices, including eyeglasses, monitor, as well as smart devices (Tim Fisher. 2021). Overlapping on and tracking in real world objects, AR objects seems occupying the same space. Besides visualization, AR system can also contain sound and tactile, for providing an new form of world. AR technology can be applied in various types of applications, such as map and games. In this study, we focus on Pokemon Go, a popular AR mobile games.
 
@@ -30,10 +30,11 @@ Pokemon Go is a famous mobile game developed by Niantic Inc, as well as released
 According to multiple researches, Pokemon Go obviously and positively affect the amount of physical activities. The amount of physical activities increased approximately 25%, comparing with previous activity level. Pokemon Go, additionally, rising the physical activity level across gender, ages, as well as weight status. The physical activityk level of player, inactive originally, increase sharply in general (Gunther Eysenbach. 2016). Some studies, however, suggested that Pokemon Go cannot directly advance the public physical health. Despite the best effects in first period, players' physical activity level drop sharply, meaning that the positive effects mentioned is not sustainable (Allana LeBlanc et al., 2016). This effect can be related to the motivation of players. There are three kinds of motivation for players, including health, social and immersion. Although players with health motivation presented the significant increase of the amount of physical activities, the effects caused by social and immersion motivation is limited. Merely the time spending outdoor increased rapidly (Lukas Dominik et al., 2017). In this situation, an analysis based on several aspects was conducted.
 
 
-
 ## Research Objectives
 
 It is commonly know that Pokemon Go was not designed for public health improvement. That is the reason of the confusion about the relation between Pokemon Go and physical activity. For truth discovering, the entire study was conducted based on four aspects. The relation between frequency of app usage and amount of app usage, firstly, is a main focus. Theoretically, the more the app usage, the higher the opportunity for players doing physical activity (e.g. catching Pokemon, or turning Pokestop). Following the application usage aspect, we also discuss the problem in players' characteristic. Since some researches proved that Pokemon Go players tend to join game-related physical activity, instead of physical activity in general (Alessandro Gabbiadini, 2017). The aim is discovering the existence of relations between Pokemon Go players and amount of general physical activity. In fact, the level of physical activity can be affected by various factors, including motivation, education level, and gender. We, thus, want to locate variables associating with the amount of physical activities. Last but not least, we want to examine the effects of the attitude towards physical activity caused by gender or educational level?
+
+\newpage
 
 
 # Methodology
@@ -55,9 +56,23 @@ There are 12 variables, grouped as $Attitude$, measuring participants' attitude 
 
 
 
-
-
 ## Model Selection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Modeling method
 Selection criteria
 
@@ -101,3 +116,5 @@ https://books.google.co.uk/books?id=f6TlVjrSAsgC&lpg=PP1&pg=PA181&redir_esc=y#v=
 https://www.investopedia.com/terms/m/median.asp
 
 https://link.springer.com/article/10.3758/s13428-020-01398-0
+
+https://www.jstor.org/stable/2237889?seq=1#metadata_info_tab_contents
