@@ -54,12 +54,18 @@ Where $k$ is number of scale items, $\sigma^2_{y_i}$ is to the variance associat
 
 There are 12 variables, grouped as $Attitude$, measuring participants' attitude towards physical activities ($\alpha = 0.76$). (Scale of all questions were from 1 = "completely disagree" to 7 = "completely agree"). Players' physically behavior was assessed in two aspects, recency and frequency ($\alpha = 0.77$). The first three items for measuring recency of participants' physical activity were "When was the last time you had (1) a walk for more than 30 min/(2) had a run/(3) had a bike ride to get some exercise?". (The scale for those questions is 1="more than one month ago", 2="about four weeks ago", 3="about three weeks ago", 4="about two weeks ago", 5="about  one  week  ago", 6="during  the  last  week" and 7="yesterday".) For measuring frequency, the following three questions were adopted: "How many times have you had (1) a walk for more than 30 min/ (2) had a run/ (3) had a bike ride to get some exercise during the last month?, with the scale from 1="never" to 7="every day". Both former and latter were transformed as one variable, $PokemonGo_Relate.Behaviour$. The remaining three variables, names starting with "PokemonPastBehaviour", were used for assessing participants' physical behavior relating to Pokemon Go ($\alpha = 0.7$). Questions represented by these three variables were "How many times have you walked more than 30 min/ had a run/ had a bike ride with the intent of searching for Pokemon Go during the last month?" ( anchored with 1="never", 2="two times",3="from three to five times",4="from six to eight times", 5="from nine to eleven times", 6="from twelve to fourteen times"and 7="every day"). Those variables were grouped as $PokemonGo_Relate.Behaviour$. Back of grouping, the new data set contains eight variables and 981 records. Based on the above data set, Gamma distribution model was applied.
 
-
+\newpage
 
 ## Model Selection
 
+Gamma Distribution is a right-skewed continuous probability distribution applied in various field. It is useful for modelling continuous variables that are positive, with skewed distributions. It appears commonly in the processes containing related waiting times between events (Somak Sengupta, 2020). The formula of Gamma distribution is demonstrated below:
 
+${f(y) = \frac{1}{\Gamma(\nu)} \lambda^{\nu}y^{\nu - 1} e^{-\lambda y}~~~~~~~~~y>0,~}$ where
 
+* $y$ is the input values which larger than zero
+* $\nu$ describe the shape of distribution
+* $\lambda$ denote the scale of distribution
+* $\Gamma(.)$ represent the Gamma function of data
 
 
 
@@ -76,16 +82,19 @@ There are 12 variables, grouped as $Attitude$, measuring participants' attitude 
 Modeling method
 Selection criteria
 
+\newpage
 
 # Analysis Result
 
 
+\newpage
 
 # Discussion and Conclusion
 
 
 
 
+\newpage
 
 # Reference
 
@@ -120,3 +129,9 @@ https://link.springer.com/article/10.3758/s13428-020-01398-0
 https://www.jstor.org/stable/2237889?seq=1#metadata_info_tab_contents
 
 https://bookdown.org/yihui/rmarkdown-cookbook/pagebreaks.html
+
+https://www.jstor.org/stable/pdf/2237889.pdf?refreqid=excelsior%3A79951bd9bfc56f8467cc6085437f767d
+
+Somak Sengupta, https://www.mygreatlearning.com/blog/gamma-distribution/
+
+https://rmarkdown.rstudio.com/authoring_basics.html
