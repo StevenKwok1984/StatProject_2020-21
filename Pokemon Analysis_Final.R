@@ -102,95 +102,23 @@ for(i in 1:7){
 ###Model Constructing###
 ########################
 
-###linear model###
-
-# full model construction
-Pok.Linear <- glm(PhyscialActivity ~ .^2, data = Pok_Grouped)
-## variable selection
-# use multiple for discovering best model
-Selected_Pok.Linear <- stepAIC(Pok.Linear)
-# model observation
-summary(Selected_Pok.Linear)
-# assumption checking
-par(mfrow = c(2, 2))
-plot(Selected_Pok.Linear)
-dev.off()
-
-
-###log-linear model###
-# full model construction
-Pok.Log_Linear <- glm(log(PhyscialActivity) ~ .^2, data = Pok_Grouped)
-## variable selection
-# apply AIC
-Selected_Pok.Log_Linear <- stepAIC(Pok.Log_Linear)
-
-# model observation
-summary(Selected_Pok.Log_Linear)
-# assumption checking
-par(mfrow = c(2, 2))
-plot(Selected_Pok.Log_Linear)
-dev.off()
-
-
-###log10-linear model###
-# full model construction
-Pok.Log10_Linear <- glm(log10(PhyscialActivity) ~ .^2, data = Pok_Grouped)
-## variable selection
-# apply AIC
-Selected_Pok.Log10_Linear <- stepAIC(Pok.Log10_Linear)
-# model observation
-summary(Selected_Pok.Log10_Linear)
-# assumption checking
-par(mfrow = c(2, 2))
-plot(Selected_Pok.Log10_Linear)
-dev.off()
-
-
 ###Gamma###
 
 Pok.Gamma <- glm(PhyscialActivity ~ .^2, family = Gamma(link="identity"), 
                  data=Pok_Grouped)
 ## variable selection
 # use multiple for discovering best model
-final_ols <- ols_step_best_subset(Pok.Gamma)
 Seleced_Pok.Gamma <- stepAIC(Pok.Gamma)
 # model observation
 summary(Seleced_Pok.Gamma)
 # assumption checking
 par(mfrow = c(2, 2))
 plot(Seleced_Pok.Gamma)
-dev.off()
 
-
-
-# failed
-###inverse-gaussian model###
-
-# full model construction
-Pok.invGaussian <- glm(PhyscialActivity ~ ., family=inverse.gaussian(link="identity")
-                       , data = Pok_Grouped)
-summary(Pok.invGaussian)
-
-#assumption checking
-par(mfrow = c(2, 2))
-plot(Pok.invGaussian)
-dev.off()
-
-## variable selection
-final_ols <- ols_step_best_subset(Pok.invGaussian)
-# use multiple for discovering best model
-Selected_Pok.invGaussian <- stepAIC(Pok.invGaussian)
-# model observation
-summary(Selected_Pok.invGaussian)
-# assumption checking
-par(mfrow = c(2, 2))
-plot(Selected_Pok.invGaussian)
-
-dev.off()
 
 
 ############
 ###Result###
 ############
 
-summary(fit)
+summary(Seleced_Pok.Gamma)

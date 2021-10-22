@@ -102,23 +102,25 @@ ${f(y) = \frac{1}{\Gamma(\nu)} \lambda^{\nu}y^{\nu - 1} e^{-\lambda y}~~~~~~~~~y
 * $\lambda$ denote the scale of distribution
 * $\Gamma(.)$ represent the Gamma function of data
 
-Gamma distribution was applied due to several reasons. To begin with, all of the variables inside data set were positive. Gamma distribution, in reality, is designed for positive values (Julian Faraway, 2016). Moreover, when looking at the assumption plots multiple linear model, we observed 
+Gamma distribution was applied due to several reasons. To begin with, all of the variables inside data set were positive. Gamma distribution, in reality, is designed for positive values (Julian Faraway, 2016).
+
 
 ```{r echo=FALSE}
-# full model construction
-Pok.Linear <- glm(PhyscialActivity ~ .^2, data = Pok_Grouped)
+Pok.Gamma <- glm(PhyscialActivity ~ .^2, family = Gamma(link="identity"), 
+                 data=Pok_Grouped)
 ## variable selection
-# use multiple for discovering best model
-Selected_Pok.Linear <- stepAIC(Pok.Linear)
-# assumption checking
-par(mfrow = c(2, 2))
-plot(Selected_Pok.Linear)
+# use AIC for discovering best model
+Seleced_Pok.Gamma <- stepAIC(Pok.Gamma)
+# model observation
+summary(Seleced_Pok.Gamma)
 ```
 
+For confirming the plausibility, four assumption plots were used:
 
-
-
-
+```{r echo=FALSE, }
+par(mfrow = c(2, 2))
+plot(Seleced_Pok.Gamma)
+```
 
 Modeling method
 Selection criteria
@@ -127,7 +129,9 @@ Selection criteria
 
 # Analysis Result
 
+```{r}
 
+```
 \newpage
 
 # Discussion and Conclusion
