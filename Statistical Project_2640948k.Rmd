@@ -110,16 +110,16 @@ Pok.Gamma <- glm(PhyscialActivity ~ .^2, family = Gamma(link="identity"),
                  data=Pok_Grouped)
 ## variable selection
 # use AIC for discovering best model
-Seleced_Pok.Gamma <- stepAIC(Pok.Gamma)
+Selected_Pok.Gamma <- stepAIC(Pok.Gamma)
 # model observation
-summary(Seleced_Pok.Gamma)
+summary(Selected_Pok.Gamma)
 ```
 
 For confirming the plausibility, four assumption plots were used:
 
 ```{r echo=FALSE, }
 par(mfrow = c(2, 2))
-plot(Seleced_Pok.Gamma)
+plot(Selected_Pok.Gamma)
 ```
 
 Modeling method
@@ -130,7 +130,7 @@ Selection criteria
 # Analysis Result
 
 ```{r}
-
+summary()
 ```
 \newpage
 

@@ -102,18 +102,8 @@ for(i in 1:7){
 ###Model Constructing###
 ########################
 
-###Gamma###
+###Neural Network###
 
-Pok.Gamma <- glm(PhyscialActivity ~ .^2, family = Gamma(link="identity"), 
-                 data=Pok_Grouped)
-## variable selection
-# use multiple for discovering best model
-Selected_Pok.Gamma <- stepAIC(Pok.Gamma)
-# model observation
-summary(Selected_Pok.Gamma)
-# assumption checking
-par(mfrow = c(2, 2))
-plot(Selected_Pok.Gamma)
 
 
 
