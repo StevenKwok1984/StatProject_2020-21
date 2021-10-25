@@ -129,9 +129,6 @@ After developing full Gamma model, stepwise selection, using AIC as criteria, wa
 
 # Analysis Result
 
-```{r eval=FALSE, include=FALSE}
-summary(Selected_Pok.Gamma)
-```
 \newpage
 
 # Discussion and Conclusion
@@ -143,44 +140,50 @@ summary(Selected_Pok.Gamma)
 
 # Reference
 
-https://www.ign.com/articles/2015/09/10/pokemon-go-coming-to-smartphones
-
-https://www.theverge.com/2015/9/10/9300101/pokemon-go-nintendo-mobile-games
-
-https://www.tandfonline.com/doi/full/10.1080/17430430500355790?scroll=top&needAccess=true
-
-https://www.lifewire.com/augmented-reality-ar-definition-4155104
-
-Smith, C. (2017, November 12).80 amazing Pokemon Go statistics. RetrievedNovember 17, 2017, from https://expandedramblings.com/index.php/pokemon-go-statistics/.
-
-https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5174727/
-
-https://blogs.scientificamerican.com/guilty-planet/httpblogsscientificamericancomguilty-planet20110707the-pros-cons-of-amazon-mechanical-turk-for-scientific-surveys/
-
-https://achilleaskostoulas.com/2013/02/13/on-likert-scales-ordinal-data-and-mean-values/
-
-https://data.library.virginia.edu/using-and-interpreting-cronbachs-alpha/
-
-https://www.statisticshowto.com/probability-and-statistics/statistics-definitions/cronbachs-alpha-spss/
+Bradfield & Underhill. (2004). "IntroSTAT". 2nd. Department of Statistical Sciences, University of Cape Town. p.181-183 https://books.google.co.uk/books?id=f6TlVjrSAsgC&lpg=PP1&pg=PA181&redir_esc=y#v=onepage&q&f=false
 
 Cronbach, Lee J. (1951). "Coefficient alpha and the internal structure of tests". Psychometrika. Springer Science and Business Media LLC. 16 (3): 297-334
 
-https://books.google.co.uk/books?id=f6TlVjrSAsgC&lpg=PP1&pg=PA181&redir_esc=y#v=onepage&q&f=false
+Eysenbach Gunther. (2016). "Influence of Pokémon Go on Physical Activity: Study and Implications". Journal of Medical Internet Research. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5174727/
 
-https://www.investopedia.com/terms/m/median.asp
+Fisher Tim. (2021). "What Is Augmented Reality?". Lifewire.  https://www.lifewire.com/augmented-reality-ar-definition-4155104
 
-https://link.springer.com/article/10.3758/s13428-020-01398-0
+Ganti Akhilesh. (2021). "Median". Investopedia. https://www.investopedia.com/terms/m/median.asp
 
-https://www.jstor.org/stable/2237889?seq=1#metadata_info_tab_contents
+Glen Stephanie. (2021). "Cronbach's Alpha: Simple Definition, Use and Interpretation". Statistics How To.  https://www.statisticshowto.com/probability-and-statistics/statistics-definitions/cronbachs-alpha-spss/
 
-https://bookdown.org/yihui/rmarkdown-cookbook/pagebreaks.html
+Goforth Chelsea. (2015). "Using and Interpreting Cronbach's Alpha". University pf Virginia Library. https://data.library.virginia.edu/using-and-interpreting-cronbachs-alpha/
 
-https://www.jstor.org/stable/pdf/2237889.pdf?refreqid=excelsior%3A79951bd9bfc56f8467cc6085437f767d
+Hayes Adam. (2021). "Stepwise Regression". Investopedia. https://www.investopedia.com/terms/s/stepwise-regression.asp
 
-Somak Sengupta, https://www.mygreatlearning.com/blog/gamma-distribution/
+Hocking, R. R. (1976). A Biometrics Invited Paper. The Analysis and Selection of Variables in Linear Regression. Biometrics, 32(1), 1-49. https://doi.org/10.2307/2529336
 
-https://rmarkdown.rstudio.com/authoring_basics.html
+Jacquet Jennifer. (2011). "The pros & cons of Amazon Mechanical Turk for scientific surveys". Scientific American.  https://blogs.scientificamerican.com/guilty-planet/httpblogsscientificamericancomguilty-planet20110707the-pros-cons-of-amazon-mechanical-turk-for-scientific-surveys/
 
-https://www.jstor.org/stable/pdf/2529336.pdf?refreqid=excelsior%3A668af2a71aa21027d7a3adc0dd2f6ca7
+Kostoulas Achilleas. (2013). "On Likert scales, ordinal data and mean values". Achilleas Kostoulas. https://achilleaskostoulas.com/2013/02/13/on-likert-scales-ordinal-data-and-mean-values/
 
-https://www.investopedia.com/terms/s/stepwise-regression.asp
+McNeish, D., Wolf, M.G. (2020). Thinking twice about sum scores. Behav Res 52, p.2287-2305. https://doi.org/10.3758/s13428-020-01398-0
+
+Reilly Luke. (2017). "Pokémon GO Coming to Smartphones". IGN Entertainment.  https://www.ign.com/articles/2015/09/10/pokemon-go-coming-to-smartphones
+
+Seippel Ornulf. (2006). "The Meanings of Sport: Fun, Health, Beauty or Community?". Tandfonline https://www.tandfonline.com/doi/full/10.1080/17430430500355790?scroll=top&needAccess=true
+
+Sengupta Somak. (2020). "Gamma Distribution Explained | What is Gamma Distribution?". Great Learning. https://www.mygreatlearning.com/blog/gamma-distribution/
+
+Smith, C. (2017, November 12).80 amazing Pokemon Go statistics. RetrievedNovember 17, 2017, from https://expandedramblings.com/index.php/pokemon-go-statistics/.
+
+Stacy, E. W. (1962). A Generalization of the Gamma Distribution. The Annals of Mathematical Statistics, 33(3), 1187-1192. http://www.jstor.org/stable/2237889
+
+Webster Andrew. (2015). "With Pokémon Go, Nintendo is showing that it takes mobile seriously". The Verge.  https://www.theverge.com/2015/9/10/9300101/pokemon-go-nintendo-mobile-games
+
+
+
+
+
+
+
+
+
+
+
+
