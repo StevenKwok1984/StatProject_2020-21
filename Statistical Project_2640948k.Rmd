@@ -102,8 +102,8 @@ ${f(y) = \frac{1}{\Gamma(\nu)} \lambda^{\nu}y^{\nu - 1} e^{-\lambda y}~~~~~~~~~y
 * $\lambda$ denote the scale of distribution
 * $\Gamma(.)$ represent the Gamma function of data
 
-Gamma distribution was applied due to several reasons. To begin with, all of the variables inside data set were positive. Gamma distribution, in reality, is designed for positive values (Julian Faraway, 2016).
-
+Gamma distribution was applied due to several reasons. To begin with, all of the variables inside data set were positive. Gamma distribution, in reality, is designed for positive values (Julian Faraway, 2016). Several models, including linear model, log-linear model and Gamma distribution, are constructed and compared by both AIC and assumptions examining plot. Although not having smallest AIC, Gamma distribution 
+are the best in accordance with four assumptions plots.
 
 ```{r echo=FALSE}
 Pok.Gamma <- glm(PhyscialActivity ~ .^2, family = Gamma(link="identity"), 
@@ -117,19 +117,19 @@ summary(Selected_Pok.Gamma)
 
 For confirming the plausibility, four assumption plots were used:
 
-```{r echo=FALSE, }
+```{r include=FALSE}
 par(mfrow = c(2, 2))
 plot(Selected_Pok.Gamma)
 ```
 
-Modeling method
-Selection criteria
+After developing full Gamma model, stepwise selection, using AIC as criteria, was applied to select the best model. Stepwise regression is a step-by-step iterative and automatic model selection approach (Adam Hayes, 2021), based on backward regression and combining with forward. With this approach, we can re-examine the importance of variables, as well as correct the misleading caused by backward selection. For instance, it is plausible that a variable, removed in backward selection, is included in first stage of forward selection method. Applying stepwise method, we can include that variable again, for obtaining the best model (R. R. Hocking, 1967).
+
 
 \newpage
 
 # Analysis Result
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 summary()
 ```
 \newpage
@@ -180,3 +180,7 @@ https://www.jstor.org/stable/pdf/2237889.pdf?refreqid=excelsior%3A79951bd9bfc56f
 Somak Sengupta, https://www.mygreatlearning.com/blog/gamma-distribution/
 
 https://rmarkdown.rstudio.com/authoring_basics.html
+
+https://www.jstor.org/stable/pdf/2529336.pdf?refreqid=excelsior%3A668af2a71aa21027d7a3adc0dd2f6ca7
+
+https://www.investopedia.com/terms/s/stepwise-regression.asp
