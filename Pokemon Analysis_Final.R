@@ -151,6 +151,7 @@ abline(h=5.33, col = "Red", lty = 5)
 
 
 
+
 # Relations visualization for education
 par(mfrow = c(2, 3))
 for(i in 1:7){
