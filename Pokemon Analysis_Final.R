@@ -114,6 +114,7 @@ summary(Selected_Pok.Gamma)
 # assumption checking
 par(mfrow = c(2, 2))
 plot(Selected_Pok.Gamma)
+dev.off()
 
 
 
@@ -122,7 +123,7 @@ plot(Selected_Pok.Gamma)
 ############
 
 # result observation by summary
-summary(Seleced_Pok.Gamma)
+summary(Selected_Pok.Gamma)
 
 # Remove social sharing
 New.Pok_Grouped <- Pok_Grouped
@@ -130,7 +131,7 @@ New.Pok_Grouped$social_sharing <- NULL
 ggpairs(New.Pok_Grouped)
 
 # O1: plot for observing relation between Number of app usage and amount of Physical Activity
-summary(Seleced_Pok.Gamma)
+summary(Selected_Pok.Gamma)
 plot(PhyscialActivity~PokemonGo_AppUsage, data=Pok_Grouped)
 #@ show nothing. But in summary, negative relation
 
@@ -138,7 +139,7 @@ plot(PhyscialActivity~PokemonGo_AppUsage, data=Pok_Grouped)
 plot(PokemonGo_Relate.Behaviour~PokemonGo_AppUsage, data=Pok_Grouped)
 
 # o3 
-summary(Seleced_Pok.Gamma)
+summary(Selected_Pok.Gamma)
 
 # O4 relations between Gender and education
 boxplot(education~Gender, data=Pok_Grouped, names=c("Female", "Male"))
