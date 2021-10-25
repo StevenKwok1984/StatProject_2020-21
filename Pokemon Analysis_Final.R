@@ -86,12 +86,12 @@ require(reshape2)
 
 ggpairs(Pok_Grouped)
 
-par(mfrow = c(2, 3))
-for(i in 1:7){
+par(mfrow = c(3, 3))
+for(i in 1:8){
   if(i != 2)
     boxplot(Pok_Grouped[,i]~education, data=Pok_Grouped)
 }
-for(i in 1:7){
+for(i in 1:8){
   if(i != 3)
     boxplot(Pok_Grouped[,i]~Gender, data=Pok_Grouped)
 }
@@ -128,13 +128,36 @@ summary(Seleced_Pok.Gamma)
 New.Pok_Grouped <- Pok_Grouped
 New.Pok_Grouped$social_sharing <- NULL
 ggpairs(New.Pok_Grouped)
+
+# O1: plot for observing relation between Number of app usage and amount of Physical Activity
+summary(Seleced_Pok.Gamma)
+plot(PhyscialActivity~PokemonGo_AppUsage, data=Pok_Grouped)
+#@ show nothing. But in summary, negative relation
+
+# O2: plot relations between PokemonGo_AppUsage and PokemonGo_Relate.Behaviour
+plot(PokemonGo_Relate.Behaviour~PokemonGo_AppUsage, data=Pok_Grouped)
+
+# o3 
+summary(Seleced_Pok.Gamma)
+
+# O4 relations between Gender and education
+boxplot(education~Gender, data=Pok_Grouped, names=c("Female", "Male"))
+#@ seems female have higher average education level
+boxplot(Attitude~Gender, data=Pok_Grouped, names=c("Female", "Male"))
+#@ female have more positive attitude, but not so obvious with overlapping
+boxplot(Attitude~education, data=Pok_Grouped)
+abline(h=5.33, col = "Red", lty = 5)
+#@ higer education is usually higher than first three
+
+
+
 # Relations visualization for education
 par(mfrow = c(2, 3))
 for(i in 1:7){
   if(i != 2)
     boxplot(Pok_Grouped[,i]~education, data=Pok_Grouped)
 }
-# Relations visualisation for Gender
+# Relations visualization for Gender
 for(i in 1:7){
   if(i != 3)
     boxplot(Pok_Grouped[,i]~Gender, data=Pok_Grouped)
