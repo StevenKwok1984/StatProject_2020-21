@@ -121,4 +121,21 @@ plot(Selected_Pok.Gamma)
 ###Result###
 ############
 
+# result observation by summary
 summary(Seleced_Pok.Gamma)
+
+# Remove social sharing
+New.Pok_Grouped <- Pok_Grouped
+New.Pok_Grouped$social_sharing <- NULL
+ggpairs(New.Pok_Grouped)
+# Relations visualization for education
+par(mfrow = c(2, 3))
+for(i in 1:7){
+  if(i != 2)
+    boxplot(Pok_Grouped[,i]~education, data=Pok_Grouped)
+}
+# Relations visualisation for Gender
+for(i in 1:7){
+  if(i != 3)
+    boxplot(Pok_Grouped[,i]~Gender, data=Pok_Grouped)
+}

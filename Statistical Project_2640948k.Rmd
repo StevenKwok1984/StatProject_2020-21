@@ -130,7 +130,7 @@ After developing full Gamma model, stepwise selection, using AIC as criteria, wa
 # Analysis Result
 
 ```{r eval=FALSE, include=FALSE}
-summary()
+summary(Selected_Pok.Gamma)
 ```
 \newpage
 
