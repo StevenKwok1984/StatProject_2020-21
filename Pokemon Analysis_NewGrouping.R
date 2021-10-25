@@ -105,7 +105,7 @@ for(i in 1:7){
 ###linear model###
 
 # full model construction
-Pok.Linear <- glm(PhyscialActivity ~ .^2, data = Pok_Grouped)
+Pok.Linear <- glm(Attitude ~ education*age, data = Pok_Grouped)
 ## variable selection
 # use multiple for discovering best model
 Selected_Pok.Linear <- stepAIC(Pok.Linear)
@@ -119,7 +119,7 @@ dev.off()
 
 ###log-linear model###
 # full model construction
-Pok.Log_Linear <- glm(log(PhyscialActivity) ~ .^2, data = Pok_Grouped)
+Pok.Log_Linear <- glm(log(PhyscialActivity) ~ education*age, data = Pok_Grouped)
 ## variable selection
 # apply AIC
 Selected_Pok.Log_Linear <- stepAIC(Pok.Log_Linear)
@@ -134,7 +134,7 @@ dev.off()
 
 ###log10-linear model###
 # full model construction
-Pok.Log10_Linear <- glm(log10(PhyscialActivity) ~ .^2, data = Pok_Grouped)
+Pok.Log10_Linear <- glm(log10(PhyscialActivity) ~ education*age, data = Pok_Grouped)
 ## variable selection
 # apply AIC
 Selected_Pok.Log10_Linear <- stepAIC(Pok.Log10_Linear)
@@ -148,7 +148,7 @@ dev.off()
 
 ###Gamma###
 
-Pok.Gamma <- glm(PhyscialActivity ~ .^2, family = Gamma(link="identity"), 
+Pok.Gamma <- glm(PhyscialActivity ~ education*age, family = Gamma(link="identity"), 
                  data=Pok_Grouped)
 ## variable selection
 # use multiple for discovering best model
