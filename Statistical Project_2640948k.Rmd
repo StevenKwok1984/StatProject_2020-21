@@ -105,29 +105,35 @@ ${f(y) = \frac{1}{\Gamma(\nu)} \lambda^{\nu}y^{\nu - 1} e^{-\lambda y}~~~~~~~~~y
 Gamma distribution was applied due to several reasons. To begin with, all of the variables inside data set were positive. Gamma distribution, in reality, is designed for positive values (Julian Faraway, 2016). Several models, including linear model, log-linear model and Gamma distribution, are constructed and compared by both AIC and assumptions examining plot. Although not having smallest AIC, Gamma distribution 
 are the best in accordance with four assumptions plots.
 
-```{r echo=FALSE}
+```{r include=FALSE}
 Pok.Gamma <- glm(PhyscialActivity ~ .^2, family = Gamma(link="identity"), 
                  data=Pok_Grouped)
-## variable selection
-# use AIC for discovering best model
-Selected_Pok.Gamma <- stepAIC(Pok.Gamma)
-# model observation
-summary(Selected_Pok.Gamma)
 ```
 
 For confirming the plausibility, four assumption plots were used:
 
-```{r include=FALSE}
+```{r eval=FALSE, include=FALSE}
 par(mfrow = c(2, 2))
-plot(Selected_Pok.Gamma)
+plot(Pok.Gamma)
 ```
 
-After developing full Gamma model, stepwise selection, using AIC as criteria, was applied to select the best model. Stepwise regression is a step-by-step iterative and automatic model selection approach (Adam Hayes, 2021), based on backward regression and combining with forward. With this approach, we can re-examine the importance of variables, as well as correct the misleading caused by backward selection. For instance, it is plausible that a variable, removed in backward selection, is included in first stage of forward selection method. Applying stepwise method, we can include that variable again, for obtaining the best model (R. R. Hocking, 1967).
+After developing full Gamma model, stepwise selection, using AIC as criteria, was applied to select the best model. Stepwise regression is a step-by-step iterative and automatic model selection approach (Adam Hayes, 2021), based on backward regression and combining with forward. With this approach, we can re-examine the importance of variables, as well as correct the misleading caused by backward selection. For instance, it is plausible that a variable, removed in backward selection, is included in first stage of forward selection method. Applying stepwise selection method, we can include that variable again, for obtaining the best model (R. R. Hocking, 1967). McElreath (2016) revealed that Akaike Information Criteria (AIC) is a well-known information criteria, for evaluating the data-fitting performance of a model. The model with smallest AIC is the best as describing greatest amount of information with smallest amount amount of variables (Bevans, 2021). Prior to result observation, we were suggested checking the assumptions.
 
+```{r include=FALSE}
+## variable selection
+# use AIC for discovering best model
+Selected_Pok.Gamma <- stepAIC(Pok.Gamma)
+```
+
+```{r assump, echo=FALSE, fig.pos = 'H', fig.cap = "\\label{fig:assump} Figure 1: Assumption Checking Plot"}
+par(mfrow = c(2, 2))
+plot(Pok.Gamma)
+```
 
 \newpage
 
 # Analysis Result
+
 
 \newpage
 
@@ -140,41 +146,7 @@ In accordance with the model assumptions plots, the Gamma model used can have im
 
 # Reference
 
-Bradfield & Underhill. (2004). "IntroSTAT". 2nd. Department of Statistical Sciences, University of Cape Town. p.181-183 https://books.google.co.uk/books?id=f6TlVjrSAsgC&lpg=PP1&pg=PA181&redir_esc=y#v=onepage&q&f=false
 
-Cronbach, Lee J. (1951). "Coefficient alpha and the internal structure of tests". Psychometrika. Springer Science and Business Media LLC. 16 (3): 297-334
-
-Eysenbach Gunther. (2016). "Influence of Pokémon Go on Physical Activity: Study and Implications". Journal of Medical Internet Research. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5174727/
-
-Fisher Tim. (2021). "What Is Augmented Reality?". Lifewire.  https://www.lifewire.com/augmented-reality-ar-definition-4155104
-
-Ganti Akhilesh. (2021). "Median". Investopedia. https://www.investopedia.com/terms/m/median.asp
-
-Glen Stephanie. (2021). "Cronbach's Alpha: Simple Definition, Use and Interpretation". Statistics How To.  https://www.statisticshowto.com/probability-and-statistics/statistics-definitions/cronbachs-alpha-spss/
-
-Goforth Chelsea. (2015). "Using and Interpreting Cronbach's Alpha". University pf Virginia Library. https://data.library.virginia.edu/using-and-interpreting-cronbachs-alpha/
-
-Hayes Adam. (2021). "Stepwise Regression". Investopedia. https://www.investopedia.com/terms/s/stepwise-regression.asp
-
-Hocking, R. R. (1976). A Biometrics Invited Paper. The Analysis and Selection of Variables in Linear Regression. Biometrics, 32(1), 1-49. https://doi.org/10.2307/2529336
-
-Jacquet Jennifer. (2011). "The pros & cons of Amazon Mechanical Turk for scientific surveys". Scientific American.  https://blogs.scientificamerican.com/guilty-planet/httpblogsscientificamericancomguilty-planet20110707the-pros-cons-of-amazon-mechanical-turk-for-scientific-surveys/
-
-Kostoulas Achilleas. (2013). "On Likert scales, ordinal data and mean values". Achilleas Kostoulas. https://achilleaskostoulas.com/2013/02/13/on-likert-scales-ordinal-data-and-mean-values/
-
-McNeish, D., Wolf, M.G. (2020). Thinking twice about sum scores. Behav Res 52, p.2287-2305. https://doi.org/10.3758/s13428-020-01398-0
-
-Reilly Luke. (2017). "Pokémon GO Coming to Smartphones". IGN Entertainment.  https://www.ign.com/articles/2015/09/10/pokemon-go-coming-to-smartphones
-
-Seippel Ornulf. (2006). "The Meanings of Sport: Fun, Health, Beauty or Community?". Tandfonline https://www.tandfonline.com/doi/full/10.1080/17430430500355790?scroll=top&needAccess=true
-
-Sengupta Somak. (2020). "Gamma Distribution Explained | What is Gamma Distribution?". Great Learning. https://www.mygreatlearning.com/blog/gamma-distribution/
-
-Smith, C. (2017, November 12).80 amazing Pokemon Go statistics. RetrievedNovember 17, 2017, from https://expandedramblings.com/index.php/pokemon-go-statistics/.
-
-Stacy, E. W. (1962). A Generalization of the Gamma Distribution. The Annals of Mathematical Statistics, 33(3), 1187-1192. http://www.jstor.org/stable/2237889
-
-Webster Andrew. (2015). "With Pokémon Go, Nintendo is showing that it takes mobile seriously". The Verge.  https://www.theverge.com/2015/9/10/9300101/pokemon-go-nintendo-mobile-games
 
 
 
