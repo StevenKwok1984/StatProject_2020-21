@@ -103,50 +103,60 @@ for(i in 1:8){
 ###Model Constructing###
 ########################
 
+
+
 ###Linear model###
-Pok.Linear <- glm(PhysicalActivity ~ .^2, data=Pok_Grouped)
-summary(Pok.Linear)
-## variable selection
-# use multiple for discovering best model
-Selected_Pok.Linear <- stepAIC(Pok.Linear)
-# model observation
-summary(Selected_Pok.Linear)
+Pok.Linear <- glm(PhysicalActivity ~ .^2 + I(age^2) + I(education^2) + 
+                    + I(Gender^2) + I(Attitude^2) + I(PokemonGo_AppUsage^2) +
+                    I(social_sharing^2) + I(PokemonGo_Relate.Behaviour^2), 
+                  data=Pok_Grouped)
 # assumption checking
 par(mfrow = c(2, 2))
-plot(Selected_Pok.Linear)
+plot(Pok.Linear)
+
+
+## variable selection
+# use multiple for discovering best model
+Final_Pok.Linear <- stepAIC(Pok.Linear)
+# model observation
+summary(Final_Pok.Linear)
+# assumption checking
+par(mfrow = c(2, 2))
+plot(Final_Pok.Linear)
 dev.off()
 
-
+# comparison
+Comp_Pok.Linear <- glm(formula = PhysicalActivity ~ age + education + Gender +
+                         Attitude + PokemonGo_AppUsage + 
+                         I(Attitude^2) + age:education + 
+                         education:Attitude, data = Pok_Grouped)
+summary(Comp_Pok.Linear)
 
 ############
 ###Result###
 ############
 
-# result observation by summary
-summary(Selected_Pok.Gamma)
-
-# Remove social sharing
-New.Pok_Grouped <- Pok_Grouped
-New.Pok_Grouped$social_sharing <- NULL
-ggpairs(New.Pok_Grouped)
 
 # O1: plot for observing relation between Number of app usage and amount of Physical Activity
-summary(Selected_Pok.Gamma)
+summary(Selected_Pok.Linear)
 plot(PhyscialActivity~PokemonGo_AppUsage, data=Pok_Grouped)
 #@ show nothing. But in summary, negative relation
 
 # O2: plot relations between PokemonGo_AppUsage and PokemonGo_Relate.Behaviour
 plot(PokemonGo_Relate.Behaviour~PokemonGo_AppUsage, data=Pok_Grouped)
 
+
 # o3 
-summary(Selected_Pok.Gamma)
+summary(Selected_Pok.Linear)
 
 # O4 relations between Gender and education
 boxplot(education~Gender, data=Pok_Grouped, names=c("Female", "Male"))
 #@ seems female have higher average education level
-boxplot(Attitude~Gender, data=Pok_Grouped, names=c("Female", "Male"))
+boxplot(Attitude~Gender, data=Pok_Grouped, names=c("Female", "Male"),
+        main="relations between Gender and Attitude ")
 #@ female have more positive attitude, but not so obvious with overlapping
-boxplot(Attitude~education, data=Pok_Grouped)
+boxplot(Attitude~education, data=Pok_Grouped, 
+        main="relations between education and Attitude") 
 abline(h=5.33, col = "Red", lty = 5)
 #@ higer education is usually higher than first three
 
