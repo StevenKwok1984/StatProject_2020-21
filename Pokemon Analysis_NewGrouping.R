@@ -1,8 +1,9 @@
 # import library required
 library(dplyr)
 library(psych)
-library(olsrr)
+# library(olsrr)
 library(car)
+library(mgcv)
 
 
 
@@ -60,7 +61,7 @@ PokemonBehaviour <- rowMeans(pok_new[27:29])
 # create new dataset
 Pok_Grouped <- pok_new[c(4:6)]
 Pok_Grouped$Attitude <- Attitude
-Pok_Grouped$PhyscialActivity <- Behaviour
+Pok_Grouped$PhysicalActivity <- Behaviour
 Pok_Grouped$PokemonGo_AppUsage <- pok_new$app_usage_PokemonGoApp_pokemonusage1
 Pok_Grouped$social_sharing <- pok_new$social_sharing
 Pok_Grouped$PokemonGo_Relate.Behaviour <- PokemonBehaviour
@@ -85,17 +86,18 @@ require(reshape2)
 ###Relations visualisation###
 
 ggpairs(Pok_Grouped)
+dev.off()
 
-par(mfrow = c(2, 3))
-for(i in 1:7){
+par(mfrow = c(3, 3))
+for(i in 1:8){
   if(i != 2)
     boxplot(Pok_Grouped[,i]~education, data=Pok_Grouped)
 }
-for(i in 1:7){
+for(i in 1:8){
   if(i != 3)
     boxplot(Pok_Grouped[,i]~Gender, data=Pok_Grouped)
 }
-
+dev.off()
 
 
 ########################
@@ -105,52 +107,43 @@ for(i in 1:7){
 ###linear model###
 
 # full model construction
-Pok.Linear <- glm(Attitude ~ education*age, data = Pok_Grouped)
+Test_Pok.Linear <- gam(PhysicalActivity~s(age) + s(education) + Gender +
+                         s(Attitude) + PokemonGo_AppUsage + social_sharing +
+                         s(PokemonGo_Relate.Behaviour), data=Pok_Grouped)
+summary(Test_Pok.Linear)
+# assumption checking for full model
+par(mfrow = c(2, 2))
+gam.check(Test_Pok.Linear)
+dev.off()
+
+
 ## variable selection
 # use multiple for discovering best model
-Selected_Pok.Linear <- stepAIC(Pok.Linear)
+Test_Pok.Linear <- stepAIC(Test_Pok.Linear)
 # model observation
-summary(Selected_Pok.Linear)
+summary(Test_Pok.Linear)
 # assumption checking
 par(mfrow = c(2, 2))
-plot(Selected_Pok.Linear)
+plot(Test_Pok.Linear)
 dev.off()
 
 
-###log-linear model###
-# full model construction
-Pok.Log_Linear <- glm(log(PhyscialActivity) ~ education*age, data = Pok_Grouped)
-## variable selection
-# apply AIC
-Selected_Pok.Log_Linear <- stepAIC(Pok.Log_Linear)
-
-# model observation
-summary(Selected_Pok.Log_Linear)
-# assumption checking
-par(mfrow = c(2, 2))
-plot(Selected_Pok.Log_Linear)
-dev.off()
 
 
-###Gamma###
 
-Pok.Gamma <- glm(PhyscialActivity ~ education*age, family = Gamma(link="identity"), 
-                 data=Pok_Grouped)
+###Linear model###
+Pok.Linear <- glm(PhysicalActivity ~ .^2 + I(age^2) + I(education^2) + 
+                    + I(Gender^2) + I(Attitude^2) + I(PokemonGo_AppUsage^2) +
+                    I(social_sharing^2) + I(PokemonGo_Relate.Behaviour^2), 
+                  data=Pok_Grouped)
+summary(Pok.Linear)
+
 ## variable selection
 # use multiple for discovering best model
-final_ols <- ols_step_best_subset(Pok.Gamma)
-Seleced_Pok.Gamma <- stepAIC(Pok.Gamma)
+Select_Pok.Linear <- stepAIC(Pok.Linear)
 # model observation
-summary(Seleced_Pok.Gamma)
+summary(Select_Pok.Linear)
 # assumption checking
 par(mfrow = c(2, 2))
-plot(Seleced_Pok.Gamma)
+plot(Select_Pok.Linear)
 dev.off()
-
-
-
-############
-###Result###
-############
-
-summary(fit)

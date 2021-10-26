@@ -3,6 +3,7 @@ library(dplyr)
 library(psych)
 library(olsrr)
 library(car)
+library(mgcv)
 
 
 
@@ -60,7 +61,7 @@ PokemonBehaviour <- rowMeans(pok_new[27:29])
 # create new dataset
 Pok_Grouped <- pok_new[c(4:6)]
 Pok_Grouped$Attitude <- Attitude
-Pok_Grouped$PhyscialActivity <- Behaviour
+Pok_Grouped$PhysicalActivity <- Behaviour
 Pok_Grouped$PokemonGo_AppUsage <- pok_new$app_usage_PokemonGoApp_pokemonusage1
 Pok_Grouped$social_sharing <- pok_new$social_sharing
 Pok_Grouped$PokemonGo_Relate.Behaviour <- PokemonBehaviour
@@ -102,18 +103,17 @@ for(i in 1:8){
 ###Model Constructing###
 ########################
 
-###Gamma###
-
-Pok.Gamma <- glm(PhyscialActivity ~ .^2, family = Gamma(link="identity"), 
-                 data=Pok_Grouped)
+###Linear model###
+Pok.Linear <- glm(PhysicalActivity ~ .^2, data=Pok_Grouped)
+summary(Pok.Linear)
 ## variable selection
 # use multiple for discovering best model
-Selected_Pok.Gamma <- stepAIC(Pok.Gamma)
+Selected_Pok.Linear <- stepAIC(Pok.Linear)
 # model observation
-summary(Selected_Pok.Gamma)
+summary(Selected_Pok.Linear)
 # assumption checking
 par(mfrow = c(2, 2))
-plot(Selected_Pok.Gamma)
+plot(Selected_Pok.Linear)
 dev.off()
 
 
