@@ -131,9 +131,9 @@ After developing full Gamma model, stepwise selection, using AIC as criteria, wa
 
 \newpage
 
-# Discussion and Conclusion
+# Conclusion and Discussion
 
-
+In accordance with the model assumptions plots, the Gamma model used can have improvement. In the future, we can try neural network model. 
 
 
 \newpage
