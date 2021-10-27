@@ -68,7 +68,7 @@ Pok_Grouped$PokemonGo_Relate.Behaviour <- PokemonBehaviour
 head(Pok_Grouped)
 
 summary(Pok_Grouped)
-
+pok$PokemonPastBehavior_pokPast4_pokemonusage_NOT_USED
 
 
 ########################
@@ -131,6 +131,8 @@ Comp_Pok.Linear <- glm(formula = PhysicalActivity ~ age + education + Gender +
                          I(Attitude^2) + age:education + 
                          education:Attitude, data = Pok_Grouped)
 summary(Comp_Pok.Linear)
+
+
 
 ############
 ###Result###

@@ -9,11 +9,13 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Ref list
 
 Bevans Rebecca. (2021). "An introduction to the Akaike information criterion". Scribbr.  https://www.scribbr.com/statistics/akaike-information-criterion/
 
 Bradfield & Underhill. (2004). "IntroSTAT". 2nd. Department of Statistical Sciences, University of Cape Town. p.181-183 https://books.google.co.uk/books?id=f6TlVjrSAsgC&lpg=PP1&pg=PA181&redir_esc=y#v=onepage&q&f=false
+
+Buraimo Babatunde, Jones Helen & Millward Peter. (2011). "Adult participation in sport: Analysis of the Taking Part Survey". department for culture, media and sport. https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/137986/tp-adult-participation-sport-analysis.pdf
 
 Cronbach, Lee J. (1951). "Coefficient alpha and the internal structure of tests". Psychometrika. Springer Science and Business Media LLC. 16 (3): 297-334
 
