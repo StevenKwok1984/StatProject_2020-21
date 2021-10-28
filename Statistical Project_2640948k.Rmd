@@ -65,7 +65,7 @@ pok_new[,4:30] <- pok_new[,4:30] %>% mutate_if(is.factor,as.numeric)
 
 Despite Age and gender, discrete number and nominal data respectively, all the others are ordinal variables. Both "Frequency of App Usage" and "How often sharing on social media" are ordinal data, anchored with the scale from 1 = "never" to 7 = "very often". Former accessing the extent of players using Pokemon Go per month, while the latter demonstrate the frequency players sharing their achievements on social media. Those variables mentioned above were treated as independent variables, while the remaining variables will be grouped by row mean, in accordance with the result of Cronbach's alpha. Cronbach's alpha, also known as alpha reliability, is a measure for assessing strength of internal consistency, of several items or variables. The alpha score was calculated by correlating the score for every items with the total score for related observations, following the comparison of the variance of individual item scores (Cronbach Lee, 1951). The formula is:
 
-"$\alpha = (\frac{k}{k+1})(1-\frac{\sum_{i=1}^{k} {\sigma^{2}_{y_i}}}{\sigma^{2}_{x}})$" 
+$\alpha = (\frac{k}{k+1})(1-\frac{\sum_{i=1}^{k} {\sigma^{2}_{y_i}}}{\sigma^{2}_{x}})$ 
 
 Where $k$ is number of scale items, $\sigma^2_{y_i}$ is to the variance associated with item $i$, and $\sigma^{2}_{x}$ denoted as the variance associated with the observed total scores (Chelsea Goforth, 2015). In accordance with Rule of Thumb, if the alpha score is between 0.7 and 0.8, the grouping process is plausible (Stephanie Glen, 2021). Proving by alpha score, We group variables having strong internal consistency by mean of each instances. In supplement, group-by-mean method (Underhill L.G, 1998) was applied as we prefer grouping variables, without missing much information(like median)(Akhihesh Ganti, 2021) or altering the scale(Daniel McNeish & Melissa Gordon Wolf, 2020). The details were mentioned below.
 
@@ -96,7 +96,7 @@ According to the previous summary and plot 1, the response variable is continuou
 
 # Model Selection
 
-Polynomial linear model is a model based 
+Polynomial linear model is a model based on simple linear model.
 
 ```{r include=FALSE}
 Pok.Linear <- glm(PhysicalActivity ~ .^2 + I(age^2) + I(education^2) + 
