@@ -86,16 +86,25 @@ require(reshape2)
 ###Relations visualisation###
 
 ggpairs(Pok_Grouped)
+dev.off()
 
-par(mfrow = c(3, 3))
-for(i in 1:8){
-  if(i != 2)
-    boxplot(Pok_Grouped[,i]~education, data=Pok_Grouped)
-}
-for(i in 1:8){
-  if(i != 3)
-    boxplot(Pok_Grouped[,i]~Gender, data=Pok_Grouped)
-}
+# gender vs remaining
+par(mfrow = c(2, 2))
+boxplot(education~Gender, data=Pok_Grouped, names=c("Female","Male"))
+boxplot(Attitude~Gender, data=Pok_Grouped, names=c("Female","Male"))
+boxplot(PhysicalActivity~Gender, data=Pok_Grouped, names=c("Female","Male"))
+boxplot(PokemonGo_Relate.Behaviour~Gender, data=Pok_Grouped, names=c("Female","Male"))
+dev.off()
+
+# education level vs remaining
+par(mfrow = c(2, 2))
+boxplot(age~education, data=Pok_Grouped)
+boxplot(Attitude~education, data=Pok_Grouped)
+boxplot(PhysicalActivity~education, data=Pok_Grouped)
+boxplot(PokemonGo_AppUsage~education, data=Pok_Grouped)
+dev.off()
+
+
 
 
 

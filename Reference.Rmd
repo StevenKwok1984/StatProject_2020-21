@@ -17,6 +17,8 @@ Bradfield & Underhill. (2004). "IntroSTAT". 2nd. Department of Statistical Scien
 
 Buraimo Babatunde, Jones Helen & Millward Peter. (2011). "Adult participation in sport: Analysis of the Taking Part Survey". department for culture, media and sport. https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/137986/tp-adult-participation-sport-analysis.pdf
 
+Cortina Jose. (1992). "What Is Coefficient Alpha? An Examination of Theory and Applications". American Psychological Association, Inc. p.101
+
 Cronbach, Lee J. (1951). "Coefficient alpha and the internal structure of tests". Psychometrika. Springer Science and Business Media LLC. 16 (3): 297-334
 
 Eysenbach Gunther. (2016). "Influence of Pokémon Go on Physical Activity: Study and Implications". Journal of Medical Internet Research. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5174727/
