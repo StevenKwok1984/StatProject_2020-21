@@ -42,7 +42,6 @@ It is commonly know that Pokemon Go was not designed for public health improveme
 \newpage
 
 
-
 # Data Description and Processing
 
 ```{r include=FALSE}
@@ -75,6 +74,7 @@ Attitude <- rowMeans(pok_new[7:18])
 Behaviour <- rowMeans(pok_new[19:24])
 PokemonBehaviour <- rowMeans(pok_new[27:29])
 ```
+
 There are 12 variables, grouped as $Attitude$, measuring participants' attitude towards physical activities ($\alpha = 0.76$). (Scale of all questions were from 1 = "completely disagree" to 7 = "completely agree"). Players' physically behavior was assessed in two aspects, recency and frequency ($\alpha = 0.77$). The first three items for measuring recency of participants' physical activity were "When was the last time you had (1) a walk for more than 30 min/(2) had a run/(3) had a bike ride to get some exercise?". (The scale for those questions is 1="more than one month ago", 2="about four weeks ago", 3="about three weeks ago", 4="about two weeks ago", 5="about  one  week  ago", 6="during  the  last  week" and 7="yesterday".) For measuring frequency, the following three questions were adopted: "How many times have you had (1) a walk for more than 30 min/ (2) had a run/ (3) had a bike ride to get some exercise during the last month?, with the scale from 1="never" to 7="every day". Both former and latter were transformed as one variable, $PokemonGo_Relate.Behaviour$. The remaining three variables, names starting with "PokemonPastBehaviour", were used for assessing participants' physical behavior relating to Pokemon Go ($\alpha = 0.7$). Questions represented by these three variables were "How many times have you walked more than 30 min/ had a run/ had a bike ride with the intent of searching for Pokemon Go during the last month?" ( anchored with 1="never", 2="two times",3="from three to five times",4="from six to eight times", 5="from nine to eleven times", 6="from twelve to fourteen times"and 7="every day"). Those variables were grouped as $PokemonGo_Relate.Behaviour$. Back of grouping, the new data set contains eight variables and 981 records. Prior to model selection, we look at the summary:
 
 ```{r echo=FALSE}
@@ -121,7 +121,7 @@ Pok.Linear <- glm(PhysicalActivity ~ .^2 + I(age^2) + I(education^2) +
                   data=Pok_Grouped)
 ```
 
-Polynomial linear model is a model based on simple linear model.
+Polynomial linear regression model, based on linear regression model, is a model combinning interactions between variables (Abhigyan, 2020).
 
 
 After developing full linear model, stepwise selection, using AIC as criteria, was applied to select the best model. Stepwise regression is a step-by-step iterative and automatic model selection approach (Adam Hayes, 2021), based on backward regression and combining with forward. With this approach, we can re-examine the importance of variables, as well as correct the misleading caused by backward selection. For instance, it is plausible that a variable, removed in backward selection, is included in first stage of forward selection method. Applying stepwise selection method, we can include that variable again, for obtaining the best model (R. R. Hocking, 1967). McElreath (2016) revealed that Akaike Information Criteria (AIC) is a well-known information criteria, for evaluating the data-fitting performance of a model. The model with smallest AIC is the best as describing greatest amount of information with smallest amount amount of variables (Bevans, 2021). Prior to result observation, we were suggested checking the assumptions.
@@ -159,7 +159,7 @@ In accordance with the model assumptions plots, the Gamma model used can have im
 
 # Reference
 
-
+https://www.analyticsvidhya.com/blog/2021/07/all-you-need-to-know-about-polynomial-regression/
 
 
 
