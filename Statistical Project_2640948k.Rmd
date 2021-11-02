@@ -90,11 +90,11 @@ summary(Pok_Grouped)
 
 According to the previous summary, there are 981 records and 8 variables. In accordance with the pattern demonstrated in plot 1, we can observed that "PokemonGo_Relate.Behaviour" have unusual relations with three variables, including $age$, $Attitude$ and $PhysicalActivity$. This is possible that there are curve-linear relations between variables, with itself or others. Plot 2, additionally, showed that relations exists between $Gender$ and three variables, like $education$, $Attitude$ and $PhysicalActivity$. Plot 3 also proved that "education level" has positive relations with $age$ and $Attitude$. For modeling the interactions between variables, we apply polinomial regression model, mentioning details in the following session.
 
-```{r echo=FALSE, , fig.pos = 'H', fig.align = "canter", fig.dim = c(10, 9), fig.cap="Plot 1: Scatter plot of data distribution"}
+```{r echo=FALSE, , fig.pos = 'H', fig.dim = c(10, 9), fig.cap="Plot 1: Scatter plot of data distribution"}
 ggpairs(Pok_Grouped)
 ```
 
-```{r echo=FALSE, , fig.pos = 'H', fig.align = "canter", fig.dim = c(8, 8), fig.cap="Plot 2: Boxplots of Gender vs 4 other variables"}
+```{r echo=FALSE, fig.pos = 'H', fig.dim = c(8, 8), fig.cap="Plot 2: Boxplots of Gender vs 4 other variables"}
 par(mfrow = c(2, 2))
 boxplot(education~Gender, data=Pok_Grouped, names=c("Female","Male"))
 boxplot(Attitude~Gender, data=Pok_Grouped, names=c("Female","Male"))
@@ -102,7 +102,7 @@ boxplot(PhysicalActivity~Gender, data=Pok_Grouped, names=c("Female","Male"))
 boxplot(PokemonGo_Relate.Behaviour~Gender, data=Pok_Grouped, names=c("Female","Male"))
 ```
 
-```{r echo=FALSE, , fig.pos = 'H', fig.align = "canter", fig.dim = c(8, 8), fig.cap="Plot 3: Boxplots of Education level vs 4 other variables"}
+```{r echo=FALSE, fig.pos = 'H', fig.dim = c(8, 8), fig.cap="Plot 3: Boxplots of Education level vs 4 other variables"}
 par(mfrow = c(2, 2))
 boxplot(age~education, data=Pok_Grouped)
 boxplot(Attitude~education, data=Pok_Grouped)
@@ -121,25 +121,25 @@ Pok.Linear <- glm(PhysicalActivity ~ .^2 + I(age^2) + I(education^2) +
                   data=Pok_Grouped)
 ```
 
-Polynomial linear regression model, based on linear regression model, is a model combinning interactions between variables (Abhigyan, 2020).
+Polynomial linear regression model, a linear regression model with degree of coefficient more than one, is a model combining interactions between variables (Abhigyan, 2020). Polynomial regression can models the non-linear relationship between dependent and independent variables by adding polynomial terms to linear regression, such as the square of a variable (Agrawal. 2021). Polynomial regression was selected as the most suitable approximation of relations between variables can be provided. Some variables, in reality, have correlations with others or itself. Simple linear regression, however, cannot model these interactions, leading large error and inaccurate relationship estimation. With polynomial terms, we built up a better model for relations observations. A vast range of model, also, can be applied in polynomial regression model, including linear, Gamma and Poisson. Curvature of polynomial regression model, moreover, is flexible (Pant. 2019). We can fit wide range of positive vales. Due to accuracy and flexibility, we select polynomial regression model. Linear model was applied as it is easy for interpretation, as well as explanation. There are four assumptions for polynomial linear model. The behavior of a response variable, to begin with, can be explained by an additive relationship (both linear and curvilinear are plausible) between a response variable and several explanatory variables. It is essential that the relations between response variable and all explanatory variables are linear or curvilinear. The independent variables, additionally, should be independent with each other. Last but not least, the errors must be independent and normally distributed, following a mean zero and constant variance (Abhigyan. 2020). We examine the following assumption after obtaining the best model by stepwise selection method.
 
-
-After developing full linear model, stepwise selection, using AIC as criteria, was applied to select the best model. Stepwise regression is a step-by-step iterative and automatic model selection approach (Adam Hayes, 2021), based on backward regression and combining with forward. With this approach, we can re-examine the importance of variables, as well as correct the misleading caused by backward selection. For instance, it is plausible that a variable, removed in backward selection, is included in first stage of forward selection method. Applying stepwise selection method, we can include that variable again, for obtaining the best model (R. R. Hocking, 1967). McElreath (2016) revealed that Akaike Information Criteria (AIC) is a well-known information criteria, for evaluating the data-fitting performance of a model. The model with smallest AIC is the best as describing greatest amount of information with smallest amount amount of variables (Bevans, 2021). Prior to result observation, we were suggested checking the assumptions.
-
-```{r eval=FALSE, include=FALSE}
+```{r include=FALSE}
 ## variable selection
 # use multiple for discovering best model
 Final_Pok.Linear <- stepAIC(Pok.Linear)
 ```
 
-```{r assump, eval=FALSE, fig.pos='H', include=FALSE}
+After developing full linear model, stepwise selection, using AIC as criteria, was applied to select the best model. Stepwise regression is a step-by-step iterative and automatic model selection approach (Adam Hayes, 2021), based on backward regression and combining with forward. With this approach, we can re-examine the importance of variables, as well as correct the misleading caused by backward selection. For instance, it is plausible that a variable, removed in backward selection, is included in first stage of forward selection method. Applying stepwise selection method, we can include that variable again, for obtaining the best model (R. R. Hocking, 1967). McElreath (2016) revealed that Akaike Information Criteria (AIC) is a well-known information criteria, for evaluating the data-fitting performance of a model. The model with smallest AIC is the best as describing greatest amount of information with smallest amount amount of variables (Bevans, 2021). It is necessary for checking the model assumption, to guarantee that model can be applied. The assumptions were examined by all four plots in Plot 4. According to the plot, Residuals vs Fitted, the pattern of residuals is not obvious, suggesting that the assumption of linear or curvilinear is acceptable. The residuals spread equally around the zero line, proved that the error terms have same variance. Outliers, additionally are not exists as no residual standing away from the pattern; Normal Q-Q plot suggested that the 
+
+$PhysicalActivity = 6.136942 + 0.012821*age - 0.279905*education + 0.278323*Gender - 1.761775*Attitude - 0.198716*PokemonGo_AppUsage + 0.973577*PokemonGo_Relate.Behaviour + 0.155076*Attitude^2 - 0.046845*PokemonGo_Relate.Behaviour^2 - 0.003554*(age*education) + 0.085761*(education*Attitude)$
+
+```{r echo=FALSE, fig.pos = 'H', fig.dim = c(8, 8), fig.cap = "Plot 4: model assumption plots"}
 # assumption checking
 par(mfrow = c(2, 2))
 plot(Final_Pok.Linear)
 ```
-According to figure 2, there is no obvious positive or negative relations between residuals and fitted values. The final model is:
 
-$PhysicalActivity = 6.136942 + 0.012821*age - 0.279905*education + 0.278323*Gender - 1.761775*Attitude - 0.198716*PokemonGo_AppUsage + 0.973577*PokemonGo_Relate.Behaviour + 0.155076*Attitude^2 - 0.046845*PokemonGo_Relate.Behaviour^2 - 0.003554*(age*education) + 0.085761*(education*Attitude)$
+
 
 
 
