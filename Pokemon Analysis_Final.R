@@ -116,9 +116,10 @@ dev.off()
 
 ###Linear model###
 Pok.Linear <- glm(PhysicalActivity ~ .^2 + I(age^2) + I(education^2) + 
-                    + I(Gender^2) + I(Attitude^2) + I(PokemonGo_AppUsage^2) +
+                     + I(Attitude^2) + I(PokemonGo_AppUsage^2) +
                     I(social_sharing^2) + I(PokemonGo_Relate.Behaviour^2), 
                   data=Pok_Grouped)
+summary(Pok.Linear)
 # assumption checking
 par(mfrow = c(2, 2))
 plot(Pok.Linear)
