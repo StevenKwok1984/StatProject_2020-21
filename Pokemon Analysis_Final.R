@@ -67,7 +67,7 @@ Pok_Grouped$social_sharing <- pok_new$social_sharing
 Pok_Grouped$PokemonGo_Relate.Behaviour <- PokemonBehaviour
 head(Pok_Grouped)
 
-summary(Pok_Grouped)
+count(Pok_Grouped)
 pok$PokemonPastBehavior_pokPast4_pokemonusage_NOT_USED
 
 
