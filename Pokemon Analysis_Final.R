@@ -1,4 +1,4 @@
-# import library required
+# import necessary libraries
 library(dplyr)
 library(psych)
 library(olsrr)
@@ -40,42 +40,39 @@ summary(pok_new)
 pok_new[,4:30] <- pok_new[,4:30] %>% mutate_if(is.factor,as.numeric)
 summary(pok_new)
 
-###Justify the grouping###
-
-# Calculate Cronbach's Alpha
-## Attitude & StepsAttitude
+# Calculate Cronbach's Alpha for grouping justification
+## Attitude
 alpha(pok_new[7:18], check.keys=TRUE)
 # Physical Behaviour
 alpha(pok_new[19:24], check.keys=TRUE)
-# Pokemon Behviour
+# Pokemon Go related behw=aviour Behviour
 alpha(pok_new[27:29], check.keys=TRUE)
-
-#@ Since alpha of behaviour and Pokemon behaviour are "Acceptable"
-#@ we group them together
-
+#@ Since all alpha scores of targeted series of variables are "Acceptable",
+#@ we grouped them together
 # variable grouping
 Attitude <- rowMeans(pok_new[7:18])
 Behaviour <- rowMeans(pok_new[19:24])
 PokemonBehaviour <- rowMeans(pok_new[27:29])
 
-# create new dataset
+# create new dataset with grouped data
 Pok_Grouped <- pok_new[c(4:6)]
 Pok_Grouped$Attitude <- Attitude
 Pok_Grouped$PhysicalActivity <- Behaviour
 Pok_Grouped$PokemonGo_AppUsage <- pok_new$app_usage_PokemonGoApp_pokemonusage1
 Pok_Grouped$social_sharing <- pok_new$social_sharing
 Pok_Grouped$PokemonGo_Relate.Behaviour <- PokemonBehaviour
+# show the first few lines of the dataset
 head(Pok_Grouped)
-
+# count number of records
 count(Pok_Grouped)
-pok$PokemonPastBehavior_pokPast4_pokemonusage_NOT_USED
+
 
 
 ########################
 ###Data Visualisation###
 ########################
 
-# libraries required
+# libraries required for visualisation
 library(ggplot2)
 library(GGally)
 require(foreign)
@@ -84,16 +81,16 @@ require(Hmisc)
 require(reshape2)
 
 ###Relations visualisation###
-
+# scatter plot
 ggpairs(Pok_Grouped)
-dev.off()
 
 # gender vs remaining
 par(mfrow = c(2, 2))
 boxplot(education~Gender, data=Pok_Grouped, names=c("Female","Male"))
 boxplot(Attitude~Gender, data=Pok_Grouped, names=c("Female","Male"))
 boxplot(PhysicalActivity~Gender, data=Pok_Grouped, names=c("Female","Male"))
-boxplot(PokemonGo_Relate.Behaviour~Gender, data=Pok_Grouped, names=c("Female","Male"))
+boxplot(PokemonGo_Relate.Behaviour~Gender, data=Pok_Grouped, 
+        names=c("Female","Male"))
 dev.off()
 
 # education level vs remaining
@@ -106,19 +103,16 @@ dev.off()
 
 
 
-
-
 ########################
 ###Model Constructing###
 ########################
-
-
 
 ###Linear model###
 Pok.Linear <- glm(PhysicalActivity ~ .^2 + I(age^2) + I(education^2) + 
                      + I(Attitude^2) + I(PokemonGo_AppUsage^2) +
                     I(social_sharing^2) + I(PokemonGo_Relate.Behaviour^2), 
                   data=Pok_Grouped)
+# full model summary
 summary(Pok.Linear)
 # assumption checking
 par(mfrow = c(2, 2))
@@ -135,7 +129,7 @@ par(mfrow = c(2, 2))
 plot(Final_Pok.Linear)
 dev.off()
 
-# comparison
+# model comparison
 Comp_Pok.Linear <- glm(formula = PhysicalActivity ~ age + education + Gender +
                          Attitude + PokemonGo_AppUsage + 
                          I(Attitude^2) + age:education + 
@@ -149,14 +143,14 @@ summary(Comp_Pok.Linear)
 ############
 
 
-# O1: plot for observing relation between Number of app usage and amount of Physical Activity
+# O1: plot for observing relation between Number of app usage and
+# the amount of Physical Activity
 summary(Selected_Pok.Linear)
 plot(PhyscialActivity~PokemonGo_AppUsage, data=Pok_Grouped)
 #@ show nothing. But in summary, negative relation
 
 # O2: plot relations between PokemonGo_AppUsage and PokemonGo_Relate.Behaviour
 plot(PokemonGo_Relate.Behaviour~PokemonGo_AppUsage, data=Pok_Grouped)
-
 
 # o3 
 summary(Selected_Pok.Linear)
@@ -170,19 +164,5 @@ boxplot(Attitude~Gender, data=Pok_Grouped, names=c("Female", "Male"),
 boxplot(Attitude~education, data=Pok_Grouped, 
         main="relations between education and Attitude") 
 abline(h=5.33, col = "Red", lty = 5)
-#@ higer education is usually higher than first three
+#@ higher education is usually higher than first three
 
-
-
-
-# Relations visualization for education
-par(mfrow = c(2, 3))
-for(i in 1:7){
-  if(i != 2)
-    boxplot(Pok_Grouped[,i]~education, data=Pok_Grouped)
-}
-# Relations visualization for Gender
-for(i in 1:7){
-  if(i != 3)
-    boxplot(Pok_Grouped[,i]~Gender, data=Pok_Grouped)
-}
