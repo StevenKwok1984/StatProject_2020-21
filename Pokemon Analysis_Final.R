@@ -129,7 +129,20 @@ par(mfrow = c(2, 2))
 plot(Final_Pok.Linear)
 dev.off()
 
-# model comparison
+# justification for interaction between age and education level
+ggplot(Pok_Grouped, aes(x = age, y = PhysicalActivity, color = as.factor(education))) +
+  geom_jitter() +
+  labs(x = "Age", y = "Amount of Physical Activity", color = "education level") +
+  geom_smooth(method = "lm", se = FALSE)
+
+# justification for interaction between Attitude and education level
+ggplot(Pok_Grouped, aes(x = Attitude, y = PhysicalActivity, color = as.factor(education))) +
+  geom_jitter() +
+  labs(x = "Attitude towards Physical Activity", y = "Amount PhysicalActivityl",
+       color = "education level") +
+  geom_smooth(method = "lm", se = FALSE)
+
+# model for further comparison
 Comp_Pok.Linear <- glm(formula = PhysicalActivity ~ age + education + Gender +
                          Attitude + PokemonGo_AppUsage + 
                          I(Attitude^2) + age:education + 
