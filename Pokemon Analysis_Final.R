@@ -83,6 +83,25 @@ require(reshape2)
 ###Relations visualisation###
 # scatter plot
 ggpairs(Pok_Grouped)
+library(ggpubr)
+a <- ggplot(aes(x = age, y = PhysicalActivity), data = Pok_Grouped) + 
+  geom_smooth(method = "lm")
+b <- ggplot(aes(x = education, y = PhysicalActivity), data = Pok_Grouped) + 
+  geom_smooth(method = "lm")
+c <- ggplot(aes(x = Attitude, y = PhysicalActivity), data = Pok_Grouped) + 
+  geom_smooth(method = "lm")
+d <- ggplot(aes(x = PokemonGo_AppUsage, y = PhysicalActivity), data = Pok_Grouped) + 
+  geom_smooth(method = "lm")
+e <- ggplot(aes(x = social_sharing, y = PhysicalActivity), data = Pok_Grouped) + 
+  geom_smooth(method = "lm")
+f <- ggplot(aes(x = PokemonGo_Relate.Behaviour, y = PhysicalActivity), data = Pok_Grouped) + 
+  geom_smooth(method = "lm", formula = y ~ x + I(x^2))
+f
+ggarrange(a, b, c, d, e, f,
+          ncol = 3, nrow = 2)
+dev.off()
+
+
 
 # gender vs remaining
 par(mfrow = c(2, 2))
@@ -108,46 +127,48 @@ dev.off()
 ########################
 
 ###Linear model###
-Pok.Linear <- glm(PhysicalActivity ~ .^2 + I(age^2) + I(education^2) + 
-                     + I(Attitude^2) + I(PokemonGo_AppUsage^2) +
-                    I(social_sharing^2) + I(PokemonGo_Relate.Behaviour^2), 
+Pok.Linear <- lm(PhysicalActivity ~ .^2 + I(age^2) + 
+                     + I(Attitude^2) +
+                     I(PokemonGo_Relate.Behaviour^2), 
                   data=Pok_Grouped)
-# full model summary
 summary(Pok.Linear)
-# assumption checking
-par(mfrow = c(2, 2))
-plot(Pok.Linear)
+anova(Pok.Linear)
+AIC(Pok.Linear)
 
+#Performing step-wise regression on Pok.Linear model using ols_step_both_aic()
+library(olsrr)
+ols_step_both_aic(Pok.Linear)
+#Creating a new model selected using ols_step_both_aic()
+Select_Pok.Linear <- lm(PhysicalActivity ~  age + PokemonGo_AppUsage + 
+                          PokemonGo_Relate.Behaviour + I(education*Gender) + 
+                          I(age*Attitude) + I(Attitude*PokemonGo_Relate.Behaviour) +
+                          I(social_sharing*PokemonGo_Relate.Behaviour), data=Pok_Grouped)
+summary(Select_Pok.Linear)
+AIC(Select_Pok.Linear)
 
-## variable selection
-# use multiple for discovering best model
-Final_Pok.Linear <- stepAIC(Pok.Linear)
-# model observation
+###obtain final model###
+library(moderndive)
+get_regression_table(Select_Pok.Linear)
+#Removing insignificant variable from Pok.Linear2 model
+Final_Pok.Linear <- lm(PhysicalActivity ~ age + PokemonGo_AppUsage +
+                         PokemonGo_Relate.Behaviour + I(education*Gender) + 
+                         I(age*Attitude)+
+                         I(social_sharing*PokemonGo_Relate.Behaviour)
+                         , data=Pok_Grouped)
 summary(Final_Pok.Linear)
-# assumption checking
+AIC(Final_Pok.Linear)
+
+# justification for interaction between PokemonGo_Relate.Behaviour and social_sharing
+ggplot(Pok_Grouped, aes(x = PokemonGo_Relate.Behaviour, y = PhysicalActivity,
+                        color = as.factor(social_sharing))) +
+  geom_jitter() +
+  labs(x = "Pokemon Go Related Behaviour", y = "Amount of Physical Activity",
+       color = "social sharing") +
+  geom_smooth(method = "lm", se = FALSE)
+
+# model assumption checking
 par(mfrow = c(2, 2))
 plot(Final_Pok.Linear)
-dev.off()
-
-# justification for interaction between age and education level
-ggplot(Pok_Grouped, aes(x = age, y = PhysicalActivity, color = as.factor(education))) +
-  geom_jitter() +
-  labs(x = "Age", y = "Amount of Physical Activity", color = "education level") +
-  geom_smooth(method = "lm", se = FALSE)
-
-# justification for interaction between Attitude and education level
-ggplot(Pok_Grouped, aes(x = Attitude, y = PhysicalActivity, color = as.factor(education))) +
-  geom_jitter() +
-  labs(x = "Attitude towards Physical Activity", y = "Amount PhysicalActivityl",
-       color = "education level") +
-  geom_smooth(method = "lm", se = FALSE)
-
-# model for further comparison
-Comp_Pok.Linear <- glm(formula = PhysicalActivity ~ age + education + Gender +
-                         Attitude + PokemonGo_AppUsage + 
-                         I(Attitude^2) + age:education + 
-                         education:Attitude, data = Pok_Grouped)
-summary(Comp_Pok.Linear)
 
 
 
@@ -155,18 +176,23 @@ summary(Comp_Pok.Linear)
 ###Result###
 ############
 
-
 # O1: plot for observing relation between Number of app usage and
 # the amount of Physical Activity
 summary(Selected_Pok.Linear)
 plot(PhyscialActivity~PokemonGo_AppUsage, data=Pok_Grouped)
 #@ show nothing. But in summary, negative relation
 
-# O2: plot relations between PokemonGo_AppUsage and PokemonGo_Relate.Behaviour
+# O2: relations between PokemonGo_AppUsage and PokemonGo_Relate.Behaviour
+# model for further comparison
+Comp_Pok.Linear <- lm(PhysicalActivity ~ age + PokemonGo_AppUsage +
+                          I(education*Gender) + 
+                          I(age*Attitude), data=Pok_Grouped)
+summary(Comp_Pok.Linear)
+# plot
 plot(PokemonGo_Relate.Behaviour~PokemonGo_AppUsage, data=Pok_Grouped)
 
 # o3 
-summary(Selected_Pok.Linear)
+summary(Final_Pok.Linear)
 
 # O4 relations between Gender and education
 boxplot(education~Gender, data=Pok_Grouped, names=c("Female", "Male"))
@@ -179,3 +205,12 @@ boxplot(Attitude~education, data=Pok_Grouped,
 abline(h=5.33, col = "Red", lty = 5)
 #@ higher education is usually higher than first three
 
+#testing
+
+###Linear model###
+Test_Pok.Linear <- lm(PhysicalActivity ~ .^2, data=Pok_Grouped)
+# full model summary
+summary(Test_Pok.Linear)
+# assumption checking
+par(mfrow = c(2, 2))
+plot(Pok.Linear)
