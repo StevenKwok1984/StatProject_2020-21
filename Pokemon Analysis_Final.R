@@ -79,29 +79,34 @@ require(foreign)
 require(MASS)
 require(Hmisc)
 require(reshape2)
-
-###Relations visualisation###
-# scatter plot
-ggpairs(Pok_Grouped)
 library(ggpubr)
-a <- ggplot(aes(x = age, y = PhysicalActivity), data = Pok_Grouped) + 
+
+###Relations visualization###
+
+# scatter plots for observing relations between amount of physical activity and 
+# individual variables
+ggpairs(Pok_Grouped)
+a <- ggplot(aes(x = age, y = PhysicalActivity), data = Pok_Grouped) +
+  geom_jitter()+
   geom_smooth(method = "lm")
 b <- ggplot(aes(x = education, y = PhysicalActivity), data = Pok_Grouped) + 
+  geom_jitter()+
   geom_smooth(method = "lm")
 c <- ggplot(aes(x = Attitude, y = PhysicalActivity), data = Pok_Grouped) + 
+  geom_jitter()+
   geom_smooth(method = "lm")
-d <- ggplot(aes(x = PokemonGo_AppUsage, y = PhysicalActivity), data = Pok_Grouped) + 
+d <- ggplot(aes(x = PokemonGo_AppUsage, y = PhysicalActivity),
+            data = Pok_Grouped) + 
   geom_smooth(method = "lm")
 e <- ggplot(aes(x = social_sharing, y = PhysicalActivity), data = Pok_Grouped) + 
+  geom_jitter()+
   geom_smooth(method = "lm")
-f <- ggplot(aes(x = PokemonGo_Relate.Behaviour, y = PhysicalActivity), data = Pok_Grouped) + 
+f <- ggplot(aes(x = PokemonGo_Relate.Behaviour, y = PhysicalActivity),
+            data = Pok_Grouped) + 
+  geom_jitter()+
   geom_smooth(method = "lm", formula = y ~ x + I(x^2))
-f
-ggarrange(a, b, c, d, e, f,
-          ncol = 3, nrow = 2)
+ggarrange(a, b, c, d, e, f, ncol = 3, nrow = 2)
 dev.off()
-
-
 
 # gender vs remaining
 par(mfrow = c(2, 2))
@@ -142,7 +147,8 @@ ols_step_both_aic(Pok.Linear)
 Select_Pok.Linear <- lm(PhysicalActivity ~  age + PokemonGo_AppUsage + 
                           PokemonGo_Relate.Behaviour + I(education*Gender) + 
                           I(age*Attitude) + I(Attitude*PokemonGo_Relate.Behaviour) +
-                          I(social_sharing*PokemonGo_Relate.Behaviour), data=Pok_Grouped)
+                          I(social_sharing*PokemonGo_Relate.Behaviour),
+                         data=Pok_Grouped)
 summary(Select_Pok.Linear)
 AIC(Select_Pok.Linear)
 
@@ -205,7 +211,14 @@ boxplot(Attitude~education, data=Pok_Grouped,
 abline(h=5.33, col = "Red", lty = 5)
 #@ higher education is usually higher than first three
 
-#testing
+
+
+
+
+
+
+
+###testing###
 
 ###Linear model###
 Test_Pok.Linear <- lm(PhysicalActivity ~ .^2, data=Pok_Grouped)
