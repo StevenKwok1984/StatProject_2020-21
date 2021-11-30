@@ -182,25 +182,29 @@ plot(Final_Pok.Linear)
 ###Result###
 ############
 
-# O1: plot for observing relation between Number of app usage and
+# Objective 1: relationships between Number of app usage and
 # the amount of Physical Activity
 summary(Selected_Pok.Linear)
+# plot for observing relation between Number of app usage and
+# the amount of Physical Activity
 plot(PhyscialActivity~PokemonGo_AppUsage, data=Pok_Grouped)
 #@ show nothing. But in summary, negative relation
 
-# O2: relations between PokemonGo_AppUsage and PokemonGo_Relate.Behaviour
-# model for further comparison
+# Objective 2: Participant's preference, PokemonGo_Relate.Behaviour vs general
+#physical acivity
+# model without effects from PokemonGo_Relate.Behaviour
 Comp_Pok.Linear <- lm(PhysicalActivity ~ age + PokemonGo_AppUsage +
                           I(education*Gender) + 
                           I(age*Attitude), data=Pok_Grouped)
+#summary of the model
 summary(Comp_Pok.Linear)
-# plot
-plot(PokemonGo_Relate.Behaviour~PokemonGo_AppUsage, data=Pok_Grouped)
 
-# o3 
+# Objective 3: discover other factors associated with the amount of physical 
+# activity
 summary(Final_Pok.Linear)
 
-# O4 relations between Gender and education
+# Objective 4: Is attitude towards sports affected by gender/education level?
+# relations between Gender and education
 boxplot(education~Gender, data=Pok_Grouped, names=c("Female", "Male"))
 #@ seems female have higher average education level
 boxplot(Attitude~Gender, data=Pok_Grouped, names=c("Female", "Male"),
